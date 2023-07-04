@@ -26,9 +26,11 @@ public class UserController {
                     "User registered successfully", null);
             return ResponseEntity.ok(responseBody);
         } catch (Exception e){
+            ResponseBody<User> responseBody = new ResponseBody<>(null,
+                    e.getMessage(), e);
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(e.getMessage());
+                    .body(responseBody);
         }
     }
 
@@ -41,7 +43,9 @@ public class UserController {
                     "User logged in successfully", null);
             return ResponseEntity.ok(responseBody);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+            ResponseBody<User> responseBody = new ResponseBody<>(null,
+                    e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
     }
 }
