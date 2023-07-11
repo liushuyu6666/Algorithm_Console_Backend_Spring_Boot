@@ -1,4 +1,11 @@
 # Getting Started
+We have three plans to deploy this backend server. 
+1. Deploy it on local. Mainly for test purpose:
+   - We use AWS S3 to store images, and local mongodb to store data.
+2. Deploy it to AWS
+   - We use AWS S3 to store images, AWS EKS to deploy backend server and mongodb Atlas to support data
+3. Deploy it to our own Ubuntu server
+   - ???
 
 ## Prepare application.properties
 1. Copy and rename `application.properties.example` to `application.properties`.
@@ -11,29 +18,29 @@ To create an IAM user, an S3 bucket, and attach policies using Terraform:
    1. Please attach the policy that allows creating IAM users to `TerraformInJays`.
    ```json
    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": "iam:*",
-            "Resource": "*"
-        }
-      ]
-    }
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": "iam:*",
+         "Resource": "*"
+       }
+     ]
+   }
    ```
    2. Please attach the policy that allows creating S3 to `TerraformInJays`.
    ```json
    {
-      "Version": "2012-10-17",
-      "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": "s3:*",
-            "Resource": "*"
-        }
-      ]
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Sid": "VisualEditor0",
+         "Effect": "Allow",
+         "Action": "s3:*",
+         "Resource": "*"
+       }
+     ]
    }
    ```
    3. Generate the Access Key and Secret Key, as these values will be required for step 3.
