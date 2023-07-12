@@ -1,21 +1,23 @@
 package com.jays.demo.S3;
 
 import com.amazonaws.AmazonServiceException;
+import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.HeadBucketRequest;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 @Repository
 public class S3Repository {
@@ -59,12 +61,24 @@ public class S3Repository {
         }
     }
 
-    public String uploadFile(String fileId, MultipartFile multipartFile, String prefix) throws Exception{
+    public URL generatePreSignedUrl(String key, String contentType) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime oneHour = now.plus(1, ChronoUnit.HOURS);
+
+        GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(this.bucketName, key, HttpMethod.GET);
+        request.setExpiration(Date.from(oneHour.atZone(java.time.ZoneId.systemDefault()).toInstant()));
+        request.setContentType(contentType);
+        return this.s3client.generatePresignedUrl(request);
+    }
+
+    public String uploadFile(String fileId, MultipartFile multipartFile, String contentType, String prefix) throws Exception{
         if(!this.existsBucket()) {
             throw new Exception("No such bucket in S3");
         }
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
+        // TODO: guessContentTypeFromName
+        objectMetadata.setContentType(contentType);
         objectMetadata.setContentLength(multipartFile.getSize());
         String key = prefix + "/" + fileId;
         PutObjectRequest putObjectRequest =

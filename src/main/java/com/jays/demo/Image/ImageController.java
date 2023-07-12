@@ -30,8 +30,16 @@ public class ImageController {
     ) {
         try {
             String userId = this.authService.authenticateToken(authentication);
+            String contentType = multipartFile.getContentType();
+            assert contentType != null;
+            String MIMEType = contentType.split("/")[0];
 
-            this.imageService.uploadImage(imageName, multipartFile, userId, isPublic);
+
+            if(contentType.length() == 0 || !MIMEType.equals("image")) {
+                return ResponseEntity.status(415).body("Unsupported media type. " + contentType + " is not an image");
+            }
+
+            this.imageService.uploadImage(imageName, multipartFile, userId, contentType, isPublic);
 
             return ResponseEntity.ok("Image " + imageName + " uploaded successfully.");
         } catch (Exception e) {

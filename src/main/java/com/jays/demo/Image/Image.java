@@ -23,11 +23,15 @@ public class Image {
     @CreatedDate
     private Date uploadDate;
 
-    public Image(String userId, String fileName, String key, boolean isPublic) {
+    @NotBlank
+    private String contentType;
+
+    public Image(String userId, String fileName, String key, boolean isPublic, String contentType) {
         this.userId = userId;
         this.fileName = fileName;
         this.key = key;
         this.isPublic = isPublic;
+        this.contentType = contentType;
     }
 
     public String getImageId() {
@@ -76,5 +80,13 @@ public class Image {
 
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }
