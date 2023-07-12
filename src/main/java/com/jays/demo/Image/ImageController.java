@@ -53,9 +53,9 @@ public class ImageController {
     ) {
         try {
             String userId = this.authService.authenticateToken(authentication);
-            List<Image> images = this.imageService.listImages(userId);
+            List<ImageResponse> images = this.imageService.listImages(userId);
 
-            ResponseBody<List<Image>> responseBody = new ResponseBody<>(images, "", null);
+            ResponseBody<List<ImageResponse>> responseBody = new ResponseBody<>(images, "", null);
             return ResponseEntity.ok(responseBody);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
@@ -65,9 +65,9 @@ public class ImageController {
     @GetMapping("/images/public")
     public ResponseEntity<?> listPublicImages(
     ) {
-        List<Image> images = this.imageService.listPublicImages();
+        List<ImageResponse> images = this.imageService.listPublicImages();
 
-        ResponseBody<List<Image>> responseBody = new ResponseBody<>(images, "", null);
+        ResponseBody<List<ImageResponse>> responseBody = new ResponseBody<>(images, "", null);
         return ResponseEntity.ok(responseBody);
     }
 }

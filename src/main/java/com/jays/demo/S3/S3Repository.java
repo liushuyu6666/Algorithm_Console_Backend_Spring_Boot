@@ -61,6 +61,7 @@ public class S3Repository {
         }
     }
 
+    // TODO: encrypt the pre-signed key
     public URL generatePreSignedUrl(String key, String contentType) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime oneHour = now.plus(1, ChronoUnit.HOURS);
