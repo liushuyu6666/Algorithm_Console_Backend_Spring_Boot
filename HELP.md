@@ -1,17 +1,23 @@
 # Getting Started
-We have three plans to deploy this backend server. 
-1. Deploy it on local. Mainly for test purpose:
-   - We use AWS S3 to store images, and local mongodb to store data.
-2. Deploy it to AWS
-   - We use AWS S3 to store images, AWS EKS to deploy backend server and mongodb Atlas to support data
-3. Deploy it to our own Ubuntu server
+We have three deployment options available for the backend server:
+1. Local Deployment (for testing purposes):
+   - Utilizes AWS S3 for image storage.
+   - Utilizes a local MongoDB instance for data storage.
+2. AWS Deployment:
+   - Utilizes AWS S3 for image storage.
+   - Utilizes AWS EKS (Elastic Kubernetes Service) to deploy the backend server.
+   - Utilizes MongoDB Atlas, a managed MongoDB service by MongoDB, to support data storage.
+3. Deployment to an Ubuntu server (self-hosted):
    - ???
 
-## Prepare application.properties
+## Local
+AWS S3 + mongodb (local)
+
+### Prepare application.properties
 1. Copy and rename `application.properties.example` to `application.properties`.
 2. Replace fields with your own values.
 
-## Use Terraform to create IAM and S3 Bucket
+### Use Terraform to create IAM and S3 Bucket
 To create an IAM user, an S3 bucket, and attach policies using Terraform:
 1. Sign up for an AWS account. After signing up, you will have a root user assigned to you automatically. However, it is not recommended to use the root user for your project, and AWS does not generate an access key for it by default.
 2. Create a second IAM user named `TerraformInJays` with full permissions for IAM and S3. Remember, we require two IAM users: one exclusively for the S3 bucket and the second user, `TerraformInJays`, for executing the Terraform script. You don't need to create the policy or assign permissions immediately during IAM creation; we will use an inline policy later.
@@ -67,8 +73,7 @@ To create an IAM user, an S3 bucket, and attach policies using Terraform:
    2. Use `TerraformInJays` user for Terraform scripts. The S3 bucket `springbootjays` and IAM user `s3_user_spring_boot_jays` will be automatically generated under this user.
    3. `s3_user_spring_boot_jays`: For this project only, credentials will be generated and placed at the end of the `application.properties` file.
 
-## Install mongodb
-### Local
+### Install mongodb
 Don't forget to install mongodb on-premise if you want to demo it locally. The database name should be `Spring_Boot_Jays`, which is defined in `application.properties`.
 
 # Swagger
