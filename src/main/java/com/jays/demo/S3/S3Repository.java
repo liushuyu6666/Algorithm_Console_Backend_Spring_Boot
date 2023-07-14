@@ -90,11 +90,6 @@ public class S3Repository {
     }
 
     public boolean objectExists(String key) {
-        try {
-            this.s3client.getObject(this.bucketName, key);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+        return this.s3client.doesObjectExist(this.bucketName, key);
     }
 }
