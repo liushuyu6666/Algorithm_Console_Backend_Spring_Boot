@@ -79,4 +79,5 @@ Don't forget to install mongodb on-premise if you want to demo it locally. The d
 # Swagger
 Swagger is installed so after running this project, go to http://localhost:8080/swagger-ui/ to check all APIs.
 
-
+# Build the project
+Use `gradle build`
