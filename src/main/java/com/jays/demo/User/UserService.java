@@ -32,14 +32,14 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public String verifyUserAndReturnUserId(String email, String password) throws Exception {
+    public UserResponse verifyUserAndReturnUserId(String email, String password) throws Exception {
         Optional<User> optionalUser = userRepository.findByEmail(email);
 
         User user = optionalUser.orElseThrow(() -> new NoSuchElementException("No such User"));
 
 
         if(this.passwordEncoder.matches(password, user.getPassword())) {
-            return user.getUserId();
+            return new UserResponse(user.getUserId(), user.getUsername(), user.getEmail(), "");
         } else {
             throw new Exception("Password does not match the user");
         }

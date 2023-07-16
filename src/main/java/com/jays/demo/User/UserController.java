@@ -37,9 +37,10 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         try {
-            String userId = this.userService.verifyUserAndReturnUserId(loginRequest.getEmail(), loginRequest.getPassword());
-            String token = this.authService.generateToken(userId);
-            ResponseBody<String> responseBody = new ResponseBody<>(token,
+            UserResponse userResponse = this.userService.verifyUserAndReturnUserId(loginRequest.getEmail(), loginRequest.getPassword());
+            String token = this.authService.generateToken(userResponse.getUserId());
+            userResponse.setToken(token);
+            ResponseBody<UserResponse> responseBody = new ResponseBody<>(userResponse,
                     "User logged in successfully", null);
             return ResponseEntity.ok(responseBody);
         } catch (Exception e) {
