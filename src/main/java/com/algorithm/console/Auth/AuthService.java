@@ -3,6 +3,7 @@ package com.algorithm.console.Auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class AuthService {
                 .compact();
     }
 
-    public String authenticateToken(String token) throws Exception {
+    public ObjectId authenticateToken(String token) throws Exception {
         try {
 
             Claims claims = Jwts.parser()
@@ -39,7 +40,7 @@ public class AuthService {
                 throw new Exception("The token is expired");
             }
 
-            return claims.get("userId").toString();
+            return new ObjectId(claims.get("userId").toString());
         } catch (Exception e) {
             throw new Exception("The token is invalid");
         }

@@ -2,6 +2,7 @@ package com.algorithm.console.Label;
 
 import com.algorithm.console.Auth.AuthService;
 import jakarta.validation.constraints.Null;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +29,7 @@ public class LabelController {
             @RequestBody Label label
     ) {
         try {
-            String userId = this.authService.authenticateToken(authentication);
+            ObjectId userId = this.authService.authenticateToken(authentication);
 
             String name = label.getName().trim();
             assert !name.equals("");
@@ -66,7 +67,7 @@ public class LabelController {
     @GetMapping("/labels/users")
     public ResponseEntity<ResponseBody<?>> listLabelsByUserId(@RequestHeader("Authorization") String authentication) {
         try {
-            String userId = this.authService.authenticateToken(authentication);
+            ObjectId userId = this.authService.authenticateToken(authentication);
 
             List<Label> labels = this.labelService.listLabelsByUserId(userId);
             ResponseBody<List<Label>> responseBody = new ResponseBody<>(labels, "Get labels successfully.", null);
@@ -91,7 +92,7 @@ public class LabelController {
             @RequestBody Label label
     ) {
         try {
-            String userId = this.authService.authenticateToken(authentication);
+            ObjectId userId = this.authService.authenticateToken(authentication);
 
             Label newLabel = this.labelService.updateLabelByLabelId(labelId, label, userId);
             ResponseBody<Label> responseBody = new ResponseBody<>(newLabel, "Succeeded to update label.", null);
@@ -109,7 +110,7 @@ public class LabelController {
             @RequestBody Label label
     ) {
         try {
-            String userId = this.authService.authenticateToken(authentication);
+            ObjectId userId = this.authService.authenticateToken(authentication);
 
             Label newLabel = this.labelService.updateLabelByName(name, label, userId);
             ResponseBody<Label> responseBody = new ResponseBody<>(newLabel, "Succeeded to update label.", null);
@@ -126,7 +127,7 @@ public class LabelController {
             @PathVariable("id") String labelId
     ) {
         try {
-            String userId = this.authService.authenticateToken(authentication);
+            ObjectId userId = this.authService.authenticateToken(authentication);
 
             Label label = this.labelService.deleteLabelByLabelId(labelId, userId);
             ResponseBody<Label> responseBody = new ResponseBody<>(label, "Succeeded to delete the label", null);
@@ -143,7 +144,7 @@ public class LabelController {
             @PathVariable("name") String name
     ) {
         try {
-            String userId = this.authService.authenticateToken(authentication);
+            ObjectId userId = this.authService.authenticateToken(authentication);
 
             Label label = this.labelService.deleteLabelByName(name, userId);
             ResponseBody<Label> responseBody = new ResponseBody<>(label, "Succeeded to delete the label", null);

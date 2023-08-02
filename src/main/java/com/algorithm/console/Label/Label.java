@@ -20,9 +20,9 @@ public class Label {
     private String description;
 
     @NotBlank
-    private String userId;
+    private ObjectId userId;
 
-    public Label(String name, List<ObjectId> parents, String description, String userId) {
+    public Label(String name, List<ObjectId> parents, String description, ObjectId userId) {
         this.name = name;
         this.parents = parents;
         this.description = description;
@@ -57,11 +57,11 @@ public class Label {
         this.description = description;
     }
 
-    public String getUserId() {
+    public ObjectId getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(ObjectId userId) {
         this.userId = userId;
     }
 }

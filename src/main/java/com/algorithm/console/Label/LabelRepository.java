@@ -1,5 +1,6 @@
 package com.algorithm.console.Label;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface LabelRepository extends MongoRepository<Label, String> {
     List<Label> findAll();
-    List<Label> findByUserId(String userId);
+    List<Label> findByUserId(ObjectId userId);
 
     Optional<Label> findByLabelId(String labelId);
 

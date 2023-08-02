@@ -12,7 +12,7 @@ public class LabelService {
     @Autowired
     LabelRepository labelRepository;
 
-    public Label createLabel(String name, List<ObjectId> parents, String description, String userId) throws Exception{
+    public Label createLabel(String name, List<ObjectId> parents, String description, ObjectId userId) throws Exception{
         String normalizedName = StringFieldProcess.normalizeField(name);
         if(this.labelRepository.existsByName(normalizedName)) {
             throw new Exception("Label name " + normalizedName + " already existed.");
@@ -32,7 +32,7 @@ public class LabelService {
         return this.labelRepository.findByName(normalizedName).orElse(null);
     }
 
-    public List<Label> listLabelsByUserId(String userId) {
+    public List<Label> listLabelsByUserId(ObjectId userId) {
         return this.labelRepository.findByUserId(userId);
     }
 
@@ -40,7 +40,7 @@ public class LabelService {
         return this.labelRepository.findAll();
     }
 
-    public Label updateLabelByLabelId(String labelId, Label newLabel, String userId) throws Exception {
+    public Label updateLabelByLabelId(String labelId, Label newLabel, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(newLabel.getName());
 
         Label labelById = this.labelRepository.findByLabelId(labelId).orElse(null);
@@ -67,7 +67,7 @@ public class LabelService {
         }
     }
 
-    public Label updateLabelByName(String name, Label newLabel, String userId) throws Exception{
+    public Label updateLabelByName(String name, Label newLabel, ObjectId userId) throws Exception{
         String oldNormalizedName = StringFieldProcess.normalizeField(name);
         String newNormalizedName = StringFieldProcess.normalizeField(newLabel.getName());
 
@@ -95,7 +95,7 @@ public class LabelService {
         }
     }
 
-    public Label deleteLabelByLabelId(String labelId, String userId) throws Exception {
+    public Label deleteLabelByLabelId(String labelId, ObjectId userId) throws Exception {
         Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
 
         if (label != null) {
@@ -111,7 +111,7 @@ public class LabelService {
         }
     }
 
-    public Label deleteLabelByName(String name, String userId) throws Exception {
+    public Label deleteLabelByName(String name, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(name);
 
         Label label = this.labelRepository.findByName(normalizedName).orElse(null);
