@@ -1,12 +1,11 @@
-package com.jays.demo.Label;
+package com.algorithm.console.Label;
 
-import com.jays.demo.Auth.AuthService;
+import com.algorithm.console.Auth.AuthService;
 import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.jays.demo.Payload.ResponseBody;
+import com.algorithm.console.Payload.ResponseBody;
 
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.jays.demo.Payload;
+package com.algorithm.console.Payload;
 
 public class ResponseBody<T> {
     private T result;

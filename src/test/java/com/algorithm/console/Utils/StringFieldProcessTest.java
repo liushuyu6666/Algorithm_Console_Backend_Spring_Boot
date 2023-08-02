@@ -1,4 +1,4 @@
-package com.jays.demo.Utils;
+package com.algorithm.console.Utils;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

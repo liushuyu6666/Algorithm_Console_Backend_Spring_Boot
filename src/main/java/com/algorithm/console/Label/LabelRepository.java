@@ -1,4 +1,4 @@
-package com.jays.demo.Label;
+package com.algorithm.console.Label;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

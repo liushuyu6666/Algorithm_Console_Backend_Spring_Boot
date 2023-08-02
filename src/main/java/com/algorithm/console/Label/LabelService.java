@@ -1,7 +1,6 @@
-package com.jays.demo.Label;
+package com.algorithm.console.Label;
 
-import com.jays.demo.User.UserRepository;
-import com.jays.demo.Utils.StringFieldProcess;
+import com.algorithm.console.Utils.StringFieldProcess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

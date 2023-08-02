@@ -1,4 +1,4 @@
-package com.jays.demo.Payload;
+package com.algorithm.console.Payload;
 
 import jakarta.validation.constraints.NotBlank;
 

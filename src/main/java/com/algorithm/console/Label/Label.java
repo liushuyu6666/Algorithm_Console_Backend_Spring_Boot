@@ -1,6 +1,6 @@
-package com.jays.demo.Label;
+package com.algorithm.console.Label;
 
-import com.jays.demo.Utils.StringFieldProcess;
+import com.algorithm.console.Utils.StringFieldProcess;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

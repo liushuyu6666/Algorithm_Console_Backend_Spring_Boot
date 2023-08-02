@@ -1,4 +1,4 @@
-package com.jays.demo.Auth;
+package com.algorithm.console.Auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

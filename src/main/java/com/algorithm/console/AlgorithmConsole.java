@@ -1,4 +1,4 @@
-package com.jays.demo;
+package com.algorithm.console;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,10 @@ import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @EnableMongoAuditing
-public class DemoApplication {
+public class AlgorithmConsole {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(AlgorithmConsole.class, args);
 	}
 
 }

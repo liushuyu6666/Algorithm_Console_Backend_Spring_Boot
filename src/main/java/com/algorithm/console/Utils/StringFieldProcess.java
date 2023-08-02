@@ -1,4 +1,4 @@
-package com.jays.demo.Utils;
+package com.algorithm.console.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

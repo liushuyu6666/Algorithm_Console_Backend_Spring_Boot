@@ -1,4 +1,4 @@
-package com.jays.demo.Configuration;
+package com.algorithm.console.Configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

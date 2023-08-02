@@ -1,9 +1,9 @@
-package com.jays.demo.User;
+package com.algorithm.console.User;
 
-import com.jays.demo.Auth.AuthService;
-import com.jays.demo.Payload.LoginRequest;
-import com.jays.demo.Payload.RegisterRequest;
-import com.jays.demo.Payload.ResponseBody;
+import com.algorithm.console.Auth.AuthService;
+import com.algorithm.console.Payload.LoginRequest;
+import com.algorithm.console.Payload.RegisterRequest;
+import com.algorithm.console.Payload.ResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +22,11 @@ public class UserController {
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
         try {
             User user = this.userService.registerUser(registerRequest.getUsername(), registerRequest.getPassword(), registerRequest.getEmail());
-            ResponseBody<User> responseBody = new ResponseBody<>(user,
+            com.algorithm.console.Payload.ResponseBody<User> responseBody = new com.algorithm.console.Payload.ResponseBody<>(user,
                     "User registered successfully", null);
             return ResponseEntity.ok(responseBody);
         } catch (Exception e){
-            ResponseBody<User> responseBody = new ResponseBody<>(null,
+            com.algorithm.console.Payload.ResponseBody<User> responseBody = new com.algorithm.console.Payload.ResponseBody<>(null,
                     e.getMessage(), e);
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
@@ -40,11 +40,11 @@ public class UserController {
             UserResponse userResponse = this.userService.verifyUserAndReturnUserId(loginRequest.getEmail(), loginRequest.getPassword());
             String token = this.authService.generateToken(userResponse.getUserId());
             userResponse.setToken(token);
-            ResponseBody<UserResponse> responseBody = new ResponseBody<>(userResponse,
+            com.algorithm.console.Payload.ResponseBody<UserResponse> responseBody = new com.algorithm.console.Payload.ResponseBody<>(userResponse,
                     "User logged in successfully", null);
             return ResponseEntity.ok(responseBody);
         } catch (Exception e) {
-            ResponseBody<User> responseBody = new ResponseBody<>(null,
+            com.algorithm.console.Payload.ResponseBody<User> responseBody = new ResponseBody<>(null,
                     e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
         }
