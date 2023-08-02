@@ -36,6 +36,10 @@ dependencies {
 	// For S3
 	implementation 'com.amazonaws:aws-java-sdk-s3:1.12.454'
 
+	// Junit
+	testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.9.3'
+
+
 }
 
 tasks.named('test') {

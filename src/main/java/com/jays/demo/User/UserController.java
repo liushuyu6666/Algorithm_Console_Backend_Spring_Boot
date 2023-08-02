@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/v1/jays")
+@RequestMapping("/v1/algorithm")
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
