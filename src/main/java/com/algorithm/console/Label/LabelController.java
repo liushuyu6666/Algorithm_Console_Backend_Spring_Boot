@@ -51,7 +51,7 @@ public class LabelController {
     }
 
     @GetMapping("/labels/{labelId}")
-    public ResponseEntity<ResponseBody<Label>> retrieveLabelByLabelId(@PathVariable("labelId") String labelId) {
+    public ResponseEntity<ResponseBody<Label>> retrieveLabelByLabelId(@PathVariable("labelId") ObjectId labelId) {
         Label label = this.labelService.retrieveLabelByLabelId(labelId);
         ResponseBody<Label> responseBody = new ResponseBody<>(label, "Get label successfully.", null);
         return ok(responseBody);
@@ -88,7 +88,7 @@ public class LabelController {
     @PutMapping("/labels/{id}")
     public ResponseEntity<ResponseBody<?>> updateLabelByLabelId(
             @RequestHeader("Authorization") String authentication,
-            @PathVariable("id") String labelId,
+            @PathVariable("id") ObjectId labelId,
             @RequestBody Label label
     ) {
         try {
@@ -124,7 +124,7 @@ public class LabelController {
     @DeleteMapping("/labels/{id}")
     public ResponseEntity<ResponseBody<?>> deleteLabelByLabelId(
             @RequestHeader("Authorization") String authentication,
-            @PathVariable("id") String labelId
+            @PathVariable("id") ObjectId labelId
     ) {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);

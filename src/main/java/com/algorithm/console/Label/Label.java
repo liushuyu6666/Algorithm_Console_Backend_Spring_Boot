@@ -11,7 +11,7 @@ import java.util.List;
 @Document(collection = "Labels")
 public class Label {
     @Id
-    private String labelId;
+    private ObjectId labelId;
     @NotBlank
     private String name;
     @NotBlank
@@ -29,7 +29,7 @@ public class Label {
         this.userId = userId;
     }
 
-    public String getLabelId() {
+    public ObjectId getLabelId() {
         return labelId;
     }
 

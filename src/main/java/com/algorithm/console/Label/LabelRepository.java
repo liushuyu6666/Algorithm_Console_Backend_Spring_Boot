@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LabelRepository extends MongoRepository<Label, String> {
+public interface LabelRepository extends MongoRepository<Label, ObjectId> {
     List<Label> findAll();
     List<Label> findByUserId(ObjectId userId);
 
-    Optional<Label> findByLabelId(String labelId);
+    Optional<Label> findByLabelId(ObjectId labelId);
 
     Optional<Label> findByName(String name);
 

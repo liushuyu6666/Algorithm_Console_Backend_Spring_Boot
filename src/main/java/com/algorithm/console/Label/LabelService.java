@@ -17,11 +17,13 @@ public class LabelService {
         if(this.labelRepository.existsByName(normalizedName)) {
             throw new Exception("Label name " + normalizedName + " already existed.");
         }
+
         Label label = new Label(normalizedName, parents, description, userId);
+
         return this.labelRepository.save(label);
     }
 
-    public Label retrieveLabelByLabelId(String labelId) {
+    public Label retrieveLabelByLabelId(ObjectId labelId) {
         return this.labelRepository.findByLabelId(labelId).orElse(null);
     }
 
@@ -40,7 +42,7 @@ public class LabelService {
         return this.labelRepository.findAll();
     }
 
-    public Label updateLabelByLabelId(String labelId, Label newLabel, ObjectId userId) throws Exception {
+    public Label updateLabelByLabelId(ObjectId labelId, Label newLabel, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(newLabel.getName());
 
         Label labelById = this.labelRepository.findByLabelId(labelId).orElse(null);
@@ -95,7 +97,7 @@ public class LabelService {
         }
     }
 
-    public Label deleteLabelByLabelId(String labelId, ObjectId userId) throws Exception {
+    public Label deleteLabelByLabelId(ObjectId labelId, ObjectId userId) throws Exception {
         Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
 
         if (label != null) {
