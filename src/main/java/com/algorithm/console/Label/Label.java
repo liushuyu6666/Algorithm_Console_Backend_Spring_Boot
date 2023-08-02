@@ -4,6 +4,7 @@ import com.algorithm.console.Utils.StringFieldProcess;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -14,14 +15,14 @@ public class Label {
     @NotBlank
     private String name;
     @NotBlank
-    private List<String> parents;
+    private List<ObjectId> parents;
     @NotBlank
     private String description;
 
     @NotBlank
     private String userId;
 
-    public Label(String name, List<String> parents, String description, String userId) {
+    public Label(String name, List<ObjectId> parents, String description, String userId) {
         this.name = name;
         this.parents = parents;
         this.description = description;
@@ -40,12 +41,12 @@ public class Label {
         this.name = StringFieldProcess.normalizeField(name);
     }
 
-    public List<String> getParents() {
+    public List<ObjectId> getParents() {
         return parents;
     }
 
-    public void setParents(List<String> parent) {
-        this.parents = parent;
+    public void setParents(List<ObjectId> parents) {
+        this.parents = parents;
     }
 
     public String getDescription() {

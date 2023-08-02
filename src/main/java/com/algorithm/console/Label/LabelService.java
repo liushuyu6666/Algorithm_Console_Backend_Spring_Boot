@@ -1,6 +1,7 @@
 package com.algorithm.console.Label;
 
 import com.algorithm.console.Utils.StringFieldProcess;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class LabelService {
     @Autowired
     LabelRepository labelRepository;
 
-    public Label createLabel(String name, List<String> parents, String description, String userId) throws Exception{
+    public Label createLabel(String name, List<ObjectId> parents, String description, String userId) throws Exception{
         String normalizedName = StringFieldProcess.normalizeField(name);
         if(this.labelRepository.existsByName(normalizedName)) {
             throw new Exception("Label name " + normalizedName + " already existed.");
