@@ -12,47 +12,61 @@ public class QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
-    public Question createQuestion(Question newQuestion, ObjectId userId) throws Exception {
+    public QuestionDTO createQuestion(Question newQuestion, ObjectId userId) throws Exception {
         String normalizedReadableId = StringFieldProcess.normalizeField(newQuestion.getReadableId());
 
         Question existingQuestion = questionRepository.findByReadableId(normalizedReadableId).orElse(null);
         if(existingQuestion != null) {
             throw new Exception("The question id " + normalizedReadableId + " is existed");
         } else {
-            Question question = new Question(newQuestion.getFrom(), newQuestion.getSection(), newQuestion.getStringName(), newQuestion.getNumericName(), newQuestion.getReadableId(), newQuestion.getLabels(), newQuestion.getParents(), newQuestion.getDifficulty(), newQuestion.getQuestionUrls(), newQuestion.getReadme(), newQuestion.getSolutions(), newQuestion.getDescription() ,userId);
-            return questionRepository.save(question);
+            Question question = new Question(
+                    newQuestion.getFrom(),
+                    newQuestion.getSection(),
+                    newQuestion.getStringName(),
+                    newQuestion.getNumericName(),
+                    newQuestion.getReadableId(),
+                    newQuestion.getLabels(),
+                    newQuestion.getParents(),
+                    newQuestion.getDifficulty(),
+                    newQuestion.getQuestionUrls(),
+                    newQuestion.getReadme(),
+                    newQuestion.getSolutions(),
+                    newQuestion.getDescription(),
+                    userId
+            );
+            return new QuestionDTO(questionRepository.save(question));
         }
     }
 
-    public Question retrieveQuestionById(ObjectId id) throws Exception {
+    public QuestionDTO retrieveQuestionById(ObjectId id) throws Exception {
         Question question = this.questionRepository.findByQuestionId(id).orElse(null);
 
         if(question == null) {
             throw new Exception("No such question");
         } else {
-            return question;
+            return new QuestionDTO(question);
         }
     }
 
-    public Question retrieveQuestionByName(String readableId) throws Exception {
+    public QuestionDTO retrieveQuestionByName(String readableId) throws Exception {
         Question question = this.questionRepository.findByReadableId(readableId).orElse(null);
 
         if(question == null) {
             throw new Exception("No such question");
         } else {
-            return question;
+            return new QuestionDTO(question);
         }
     }
 
-    public List<Question> listQuestionsByUserId(ObjectId userId) {
-        return this.questionRepository.findByUserId(userId);
+    public List<QuestionDTO> listQuestionsByUserId(ObjectId userId) {
+        return this.questionRepository.findByUserId(userId).stream().map(QuestionDTO::new).toList();
     }
 
-    public List<Question> listAllQuestions() {
-        return this.questionRepository.findAll();
+    public List<QuestionDTO> listAllQuestions() {
+        return this.questionRepository.findAll().stream().map(QuestionDTO::new).toList();
     }
 
-    public Question updateQuestionById(ObjectId id, Question question, ObjectId userId) throws Exception {
+    public QuestionDTO updateQuestionById(ObjectId id, Question question, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(question.getReadableId());
 
         Question questionFromId = this.questionRepository.findByQuestionId(id).orElse(null);
@@ -80,13 +94,13 @@ public class QuestionService {
             questionFromId.setSolutions(question.getSolutions());
             questionFromId.setUserId(userId);
 
-            return this.questionRepository.save(questionFromId);
+            return new QuestionDTO(this.questionRepository.save(questionFromId));
         } else {
             throw new Exception("Question with " + id + " does not exist.");
         }
     }
 
-    public Question updateQuestionByName(String readableId, Question question, ObjectId userId) throws Exception {
+    public QuestionDTO updateQuestionByName(String readableId, Question question, ObjectId userId) throws Exception {
         String normalizedOldName = StringFieldProcess.normalizeField(readableId);
         String normalizedNewName = StringFieldProcess.normalizeField(question.getReadableId());
 
@@ -115,13 +129,13 @@ public class QuestionService {
             questionByOldName.setSolutions(question.getSolutions());
             questionByOldName.setUserId(userId);
 
-            return this.questionRepository.save(questionByOldName);
+            return new QuestionDTO(this.questionRepository.save(questionByOldName));
         } else {
             throw new Exception("Question with " + normalizedOldName + " does not exist.");
         }
     }
 
-    public Question deleteQuestionById(ObjectId id, ObjectId userId) throws Exception {
+    public QuestionDTO deleteQuestionById(ObjectId id, ObjectId userId) throws Exception {
         Question question = this.questionRepository.findByQuestionId(id).orElse(null);
 
         if (question != null) {
@@ -130,13 +144,13 @@ public class QuestionService {
             }
 
             this.questionRepository.deleteByQuestionId(id);
-            return question;
+            return new QuestionDTO(question);
         } else {
             throw new Exception("Cannot find " + id + " under the user.");
         }
     }
 
-    public Question deleteQuestionByName(String name, ObjectId userId) throws Exception {
+    public QuestionDTO deleteQuestionByName(String name, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(name);
 
         Question question = this.questionRepository.findByReadableId(normalizedName).orElse(null);
@@ -147,7 +161,7 @@ public class QuestionService {
             }
 
             this.questionRepository.deleteByReadableId(normalizedName);
-            return question;
+            return new QuestionDTO(question);
         } else {
             throw new Exception("Cannot find " + normalizedName + " under the user.");
         }

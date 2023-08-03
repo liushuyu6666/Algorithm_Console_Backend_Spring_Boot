@@ -32,10 +32,10 @@ public class QuestionController {
 
             System.out.println(userId);
             String name = question.getReadableId().trim();
-            assert !name.equals("");
+            assert !name.isEmpty();
             try {
-                Question newQuestion = this.questionService.createQuestion(question, userId);
-                ResponseBody<Question> responseBody = new ResponseBody<>(newQuestion, "Succeeded to create the label.", null);
+                QuestionDTO newQuestion = this.questionService.createQuestion(question, userId);
+                ResponseBody<QuestionDTO> responseBody = new ResponseBody<>(newQuestion, "Succeeded to create the label.", null);
 
                 return ok(responseBody);
             } catch (Exception e) {
