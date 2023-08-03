@@ -19,7 +19,7 @@ public class QuestionService {
         if(existingQuestion != null) {
             throw new Exception("The question id " + normalizedReadableId + " is existed");
         } else {
-            Question question = new Question(newQuestion.getFrom(), newQuestion.getSection(), newQuestion.getStringName(), newQuestion.getNumericName(), newQuestion.getReadableId(), newQuestion.getLabels(), newQuestion.getParents(), newQuestion.getDifficulty(), newQuestion.getQuestionUrls(), newQuestion.getReadme(), newQuestion.getSolutions(), userId);
+            Question question = new Question(newQuestion.getFrom(), newQuestion.getSection(), newQuestion.getStringName(), newQuestion.getNumericName(), newQuestion.getReadableId(), newQuestion.getLabels(), newQuestion.getParents(), newQuestion.getDifficulty(), newQuestion.getQuestionUrls(), newQuestion.getReadme(), newQuestion.getSolutions(), newQuestion.getDescription() ,userId);
             return questionRepository.save(question);
         }
     }

@@ -45,22 +45,25 @@ public class Question {
 
     private List<Solution> solutions;
 
+    private String description;
+
     @NotBlank
     private ObjectId userId;
 
     public Question() {
     }
 
-    public Question(String from, String readableId, List<ObjectId> labels, Integer difficulty, List<Url> questionUrls, ObjectId userId) {
+    public Question(String from, String readableId, List<ObjectId> labels, Integer difficulty, List<Url> questionUrls, String description, ObjectId userId) {
         this.from = from;
         this.readableId = readableId;
         this.labels = labels;
         this.difficulty = difficulty;
         this.questionUrls = questionUrls;
+        this.description = description;
         this.userId = userId;
     }
 
-    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Solution> solutions, ObjectId userId) {
+    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Solution> solutions, String description, ObjectId userId) {
         this.from = from;
         this.section = section;
         this.stringName = stringName;
@@ -72,6 +75,7 @@ public class Question {
         this.questionUrls = questionUrls;
         this.readme = readme;
         this.solutions = solutions;
+        this.description = description;
         this.userId = userId;
     }
 
@@ -169,6 +173,14 @@ public class Question {
 
     public void setSolutions(List<Solution> solutions) {
         this.solutions = solutions;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public ObjectId getUserId() {
