@@ -1,5 +1,6 @@
 package com.algorithm.console.Label;
 
+import com.algorithm.console.Url.Url;
 import com.algorithm.console.Utils.StringFieldProcess;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
@@ -19,13 +20,16 @@ public class Label {
     @NotBlank
     private String description;
 
+    private Url url;
+
     @NotBlank
     private ObjectId userId;
 
-    public Label(String name, List<ObjectId> parents, String description, ObjectId userId) {
+    public Label(String name, List<ObjectId> parents, String description, Url url, ObjectId userId) {
         this.name = name;
         this.parents = parents;
         this.description = description;
+        this.url = url;
         this.userId = userId;
     }
 
@@ -55,6 +59,14 @@ public class Label {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Url getUrl() {
+        return url;
+    }
+
+    public void setUrl(Url url) {
+        this.url = url;
     }
 
     public ObjectId getUserId() {

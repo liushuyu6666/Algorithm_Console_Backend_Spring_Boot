@@ -12,15 +12,15 @@ public class LabelService {
     @Autowired
     LabelRepository labelRepository;
 
-    public LabelDTO createLabel(String name, List<ObjectId> parents, String description, ObjectId userId) throws Exception{
-        String normalizedName = StringFieldProcess.normalizeField(name);
+    public LabelDTO createLabel(Label label, ObjectId userId) throws Exception{
+        String normalizedName = StringFieldProcess.normalizeField(label.getName());
         if(this.labelRepository.existsByName(normalizedName)) {
             throw new Exception("Label name " + normalizedName + " already existed.");
         }
 
-        Label label = new Label(normalizedName, parents, description, userId);
+        Label newLabel = new Label(normalizedName, label.getParents(), label.getDescription(), label.getUrl(), userId);
 
-        return new LabelDTO(this.labelRepository.save(label));
+        return new LabelDTO(this.labelRepository.save(newLabel));
     }
 
     public LabelDTO retrieveLabelByLabelId(ObjectId labelId) {
@@ -63,6 +63,7 @@ public class LabelService {
             labelById.setName(normalizedName);
             labelById.setParents(newLabel.getParents());
             labelById.setDescription(newLabel.getDescription());
+            labelById.setUrl(newLabel.getUrl());
             labelById.setUserId(newLabel.getUserId());
 
             return new LabelDTO(this.labelRepository.save(labelById));
@@ -91,6 +92,7 @@ public class LabelService {
             labelByOldName.setName(newNormalizedName);
             labelByOldName.setParents(newLabel.getParents());
             labelByOldName.setDescription(newLabel.getDescription());
+            labelByOldName.setUrl(newLabel.getUrl());
             labelByOldName.setUserId(newLabel.getUserId());
 
             return new LabelDTO(this.labelRepository.save(labelByOldName));

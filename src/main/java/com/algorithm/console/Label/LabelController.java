@@ -32,9 +32,9 @@ public class LabelController {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
             String name = label.getName().trim();
-            assert !name.equals("");
+            assert !name.isEmpty();
             try {
-                LabelDTO newLabel = this.labelService.createLabel(label.getName(), label.getParents(), label.getDescription(), userId);
+                LabelDTO newLabel = this.labelService.createLabel(label, userId);
                 ResponseBody<LabelDTO> responseBody = new ResponseBody<>(newLabel, "Succeeded to create the label.", null);
 
                 return ok(responseBody);
