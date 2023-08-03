@@ -34,8 +34,8 @@ public class LabelController {
             String name = label.getName().trim();
             assert !name.equals("");
             try {
-                Label newLabel = this.labelService.createLabel(label.getName(), label.getParents(), label.getDescription(), userId);
-                ResponseBody<Label> responseBody = new ResponseBody<>(newLabel, "Succeeded to create the label.", null);
+                LabelDTO newLabel = this.labelService.createLabel(label.getName(), label.getParents(), label.getDescription(), userId);
+                ResponseBody<LabelDTO> responseBody = new ResponseBody<>(newLabel, "Succeeded to create the label.", null);
 
                 return ok(responseBody);
             } catch (Exception e) {
@@ -51,16 +51,16 @@ public class LabelController {
     }
 
     @GetMapping("/labels/{labelId}")
-    public ResponseEntity<ResponseBody<Label>> retrieveLabelByLabelId(@PathVariable("labelId") ObjectId labelId) {
-        Label label = this.labelService.retrieveLabelByLabelId(labelId);
-        ResponseBody<Label> responseBody = new ResponseBody<>(label, "Get label successfully.", null);
+    public ResponseEntity<ResponseBody<LabelDTO>> retrieveLabelByLabelId(@PathVariable("labelId") ObjectId labelId) {
+        LabelDTO labelDTO = this.labelService.retrieveLabelByLabelId(labelId);
+        ResponseBody<LabelDTO> responseBody = new ResponseBody<>(labelDTO, "Get label successfully.", null);
         return ok(responseBody);
     }
 
     @GetMapping("/labels/name/{name}")
-    public ResponseEntity<ResponseBody<Label>> retrieveLabelByName(@PathVariable("name") String name) {
-        Label label = this.labelService.retrieveLabelByName(name);
-        ResponseBody<Label> responseBody = new ResponseBody<>(label, "Get label successfully.", null);
+    public ResponseEntity<ResponseBody<LabelDTO>> retrieveLabelByName(@PathVariable("name") String name) {
+        LabelDTO labelDTO = this.labelService.retrieveLabelByName(name);
+        ResponseBody<LabelDTO> responseBody = new ResponseBody<>(labelDTO, "Get label successfully.", null);
         return ok(responseBody);
     }
 
@@ -69,8 +69,8 @@ public class LabelController {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
-            List<Label> labels = this.labelService.listLabelsByUserId(userId);
-            ResponseBody<List<Label>> responseBody = new ResponseBody<>(labels, "Get labels successfully.", null);
+            List<LabelDTO> labels = this.labelService.listLabelsByUserId(userId);
+            ResponseBody<List<LabelDTO>> responseBody = new ResponseBody<>(labels, "Get labels successfully.", null);
             return ok(responseBody);
         } catch (Exception e) {
             ResponseBody<List<Label>> responseBody = new ResponseBody<>(null, e.getMessage(), e);
@@ -79,9 +79,9 @@ public class LabelController {
     }
 
     @GetMapping("/labels")
-    public ResponseEntity<ResponseBody<List<Label>>> listAllLabels() {
-        List<Label> labels = this.labelService.listAllLabels();
-        ResponseBody<List<Label>> responseBody = new ResponseBody<>(labels, "Get labels successfully.", null);
+    public ResponseEntity<ResponseBody<List<LabelDTO>>> listAllLabels() {
+        List<LabelDTO> labels = this.labelService.listAllLabels();
+        ResponseBody<List<LabelDTO>> responseBody = new ResponseBody<>(labels, "Get labels successfully.", null);
         return ok(responseBody);
     }
 
@@ -94,8 +94,8 @@ public class LabelController {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
-            Label newLabel = this.labelService.updateLabelByLabelId(labelId, label, userId);
-            ResponseBody<Label> responseBody = new ResponseBody<>(newLabel, "Succeeded to update label.", null);
+            LabelDTO newLabel = this.labelService.updateLabelByLabelId(labelId, label, userId);
+            ResponseBody<LabelDTO> responseBody = new ResponseBody<>(newLabel, "Succeeded to update label.", null);
             return ok(responseBody);
         } catch (Exception e) {
             ResponseBody<Null> responseBody = new ResponseBody<>(null, e.getMessage(), e);
@@ -112,8 +112,8 @@ public class LabelController {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
-            Label newLabel = this.labelService.updateLabelByName(name, label, userId);
-            ResponseBody<Label> responseBody = new ResponseBody<>(newLabel, "Succeeded to update label.", null);
+            LabelDTO newLabel = this.labelService.updateLabelByName(name, label, userId);
+            ResponseBody<LabelDTO> responseBody = new ResponseBody<>(newLabel, "Succeeded to update label.", null);
             return ok(responseBody);
         } catch (Exception e) {
             ResponseBody<Null> responseBody = new ResponseBody<>(null, e.getMessage(), e);
@@ -129,8 +129,8 @@ public class LabelController {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
-            Label label = this.labelService.deleteLabelByLabelId(labelId, userId);
-            ResponseBody<Label> responseBody = new ResponseBody<>(label, "Succeeded to delete the label", null);
+            LabelDTO label = this.labelService.deleteLabelByLabelId(labelId, userId);
+            ResponseBody<LabelDTO> responseBody = new ResponseBody<>(label, "Succeeded to delete the label", null);
             return ok(responseBody);
         } catch (Exception e) {
             ResponseBody<Null> responseBody = new ResponseBody<>(null, e.getMessage(), e);
@@ -146,8 +146,8 @@ public class LabelController {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
-            Label label = this.labelService.deleteLabelByName(name, userId);
-            ResponseBody<Label> responseBody = new ResponseBody<>(label, "Succeeded to delete the label", null);
+            LabelDTO label = this.labelService.deleteLabelByName(name, userId);
+            ResponseBody<LabelDTO> responseBody = new ResponseBody<>(label, "Succeeded to delete the label", null);
             return ok(responseBody);
         } catch (Exception e) {
             ResponseBody<Null> responseBody = new ResponseBody<>(null, e.getMessage(), e);

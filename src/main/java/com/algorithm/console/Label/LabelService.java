@@ -12,7 +12,7 @@ public class LabelService {
     @Autowired
     LabelRepository labelRepository;
 
-    public Label createLabel(String name, List<ObjectId> parents, String description, ObjectId userId) throws Exception{
+    public LabelDTO createLabel(String name, List<ObjectId> parents, String description, ObjectId userId) throws Exception{
         String normalizedName = StringFieldProcess.normalizeField(name);
         if(this.labelRepository.existsByName(normalizedName)) {
             throw new Exception("Label name " + normalizedName + " already existed.");
@@ -20,29 +20,31 @@ public class LabelService {
 
         Label label = new Label(normalizedName, parents, description, userId);
 
-        return this.labelRepository.save(label);
+        return new LabelDTO(this.labelRepository.save(label));
     }
 
-    public Label retrieveLabelByLabelId(ObjectId labelId) {
-        return this.labelRepository.findByLabelId(labelId).orElse(null);
+    public LabelDTO retrieveLabelByLabelId(ObjectId labelId) {
+        Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
+        if (label == null) return null;
+        return new LabelDTO(label);
     }
 
-    public Label retrieveLabelByName(String name) {
+    public LabelDTO retrieveLabelByName(String name) {
         String normalizedName = StringFieldProcess.normalizeField(name);
-        System.out.println("norma is " + normalizedName);
-
-        return this.labelRepository.findByName(normalizedName).orElse(null);
+        Label label = this.labelRepository.findByName(normalizedName).orElse(null);
+        if (label == null) return null;
+        return new LabelDTO(label);
     }
 
-    public List<Label> listLabelsByUserId(ObjectId userId) {
-        return this.labelRepository.findByUserId(userId);
+    public List<LabelDTO> listLabelsByUserId(ObjectId userId) {
+        return this.labelRepository.findByUserId(userId).stream().map(LabelDTO::new).toList();
     }
 
-    public List<Label> listAllLabels() {
-        return this.labelRepository.findAll();
+    public List<LabelDTO> listAllLabels() {
+        return this.labelRepository.findAll().stream().map(LabelDTO::new).toList();
     }
 
-    public Label updateLabelByLabelId(ObjectId labelId, Label newLabel, ObjectId userId) throws Exception {
+    public LabelDTO updateLabelByLabelId(ObjectId labelId, Label newLabel, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(newLabel.getName());
 
         Label labelById = this.labelRepository.findByLabelId(labelId).orElse(null);
@@ -63,13 +65,13 @@ public class LabelService {
             labelById.setDescription(newLabel.getDescription());
             labelById.setUserId(newLabel.getUserId());
 
-            return this.labelRepository.save(labelById);
+            return new LabelDTO(this.labelRepository.save(labelById));
         } else {
             throw new Exception("No such label");
         }
     }
 
-    public Label updateLabelByName(String name, Label newLabel, ObjectId userId) throws Exception{
+    public LabelDTO updateLabelByName(String name, Label newLabel, ObjectId userId) throws Exception{
         String oldNormalizedName = StringFieldProcess.normalizeField(name);
         String newNormalizedName = StringFieldProcess.normalizeField(newLabel.getName());
 
@@ -91,13 +93,13 @@ public class LabelService {
             labelByOldName.setDescription(newLabel.getDescription());
             labelByOldName.setUserId(newLabel.getUserId());
 
-            return this.labelRepository.save(labelByOldName);
+            return new LabelDTO(this.labelRepository.save(labelByOldName));
         } else {
             throw new Exception("No such label.");
         }
     }
 
-    public Label deleteLabelByLabelId(ObjectId labelId, ObjectId userId) throws Exception {
+    public LabelDTO deleteLabelByLabelId(ObjectId labelId, ObjectId userId) throws Exception {
         Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
 
         if (label != null) {
@@ -107,13 +109,13 @@ public class LabelService {
 
             this.labelRepository.deleteById(labelId);
 
-            return label;
+            return new LabelDTO(label);
         } else {
             return null;
         }
     }
 
-    public Label deleteLabelByName(String name, ObjectId userId) throws Exception {
+    public LabelDTO deleteLabelByName(String name, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(name);
 
         Label label = this.labelRepository.findByName(normalizedName).orElse(null);
@@ -125,7 +127,7 @@ public class LabelService {
 
             this.labelRepository.deleteByName(normalizedName);
 
-            return label;
+            return new LabelDTO(label);
         } else {
             return null;
         }
