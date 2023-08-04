@@ -1,10 +1,13 @@
 package com.algorithm.console.Question;
 
+import com.algorithm.console.Label.Label;
+import com.algorithm.console.Label.LabelRepository;
 import com.algorithm.console.Utils.StringFieldProcess;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,13 +15,23 @@ public class QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
+    @Autowired
+    LabelRepository labelRepository;
+
     public QuestionDTO createQuestion(Question newQuestion, ObjectId userId) throws Exception {
         String normalizedReadableId = StringFieldProcess.normalizeField(newQuestion.getReadableId());
 
-        Question existingQuestion = questionRepository.findByReadableId(normalizedReadableId).orElse(null);
+        Question existingQuestion = this.questionRepository.findByReadableId(normalizedReadableId).orElse(null);
         if(existingQuestion != null) {
             throw new Exception("The question id " + normalizedReadableId + " is existed");
         } else {
+            for(ObjectId labelId : newQuestion.getLabels()) {
+                Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
+                if(label == null) continue;
+                label.getQuestions().add(newQuestion.getQuestionId());
+                this.labelRepository.save(label);
+            }
+
             Question question = new Question(
                     newQuestion.getFrom(),
                     newQuestion.getSection(),
@@ -34,7 +47,7 @@ public class QuestionService {
                     newQuestion.getDescription(),
                     userId
             );
-            return new QuestionDTO(questionRepository.save(question));
+            return new QuestionDTO(this.questionRepository.save(question));
         }
     }
 
@@ -66,6 +79,43 @@ public class QuestionService {
         return this.questionRepository.findAll().stream().map(QuestionDTO::new).toList();
     }
 
+    private void removeOneQuestionIdFromLabel(ObjectId labelId, ObjectId questionId) {
+        Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
+
+        if(label == null) return;
+
+        label.getQuestions().remove(questionId);
+        this.labelRepository.save(label);
+    }
+
+    private void addOneQuestionIdInLabel(ObjectId labelId, ObjectId questionId) {
+        Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
+
+        if(label == null) return;
+
+        label.getQuestions().add(questionId);
+        this.labelRepository.save(label);
+    }
+
+    private void updateQuestionIdsInLabels(ObjectId questionId, List<ObjectId> oldLabelIds, List<ObjectId> newLabelIds) {
+
+        List<ObjectId> onlyInOlds = new ArrayList<>(oldLabelIds);
+        onlyInOlds.removeAll(newLabelIds);
+
+        List<ObjectId> onlyInNews = new ArrayList<>(newLabelIds);
+        onlyInNews.removeAll(oldLabelIds);
+
+        for(ObjectId labelId : onlyInOlds) {
+            this.removeOneQuestionIdFromLabel(labelId, questionId);
+        }
+
+        for(ObjectId labelId: onlyInNews) {
+            this.addOneQuestionIdInLabel(labelId, questionId);
+        }
+
+
+    }
+
     public QuestionDTO updateQuestionById(ObjectId id, Question question, ObjectId userId) throws Exception {
         String normalizedName = StringFieldProcess.normalizeField(question.getReadableId());
 
@@ -80,6 +130,8 @@ public class QuestionService {
             if(!questionFromId.getUserId().equals(userId)) {
                 throw new Exception("You can not access to others label.");
             }
+
+            this.updateQuestionIdsInLabels(id, questionFromId.getLabels(), question.getLabels());
 
             questionFromId.setFrom(question.getFrom());
             questionFromId.setSection(question.getSection());
@@ -116,6 +168,8 @@ public class QuestionService {
                 throw new Exception("You can not access to others label.");
             }
 
+            this.updateQuestionIdsInLabels(questionByOldName.getQuestionId(), questionByOldName.getLabels(), question.getLabels());
+
             questionByOldName.setFrom(question.getFrom());
             questionByOldName.setSection(question.getSection());
             questionByOldName.setStringName(question.getStringName());
@@ -143,6 +197,11 @@ public class QuestionService {
                 throw new Exception("You can not access to others question.");
             }
 
+            List<ObjectId> labelIds = question.getLabels();
+            for(ObjectId labelId : labelIds) {
+                this.removeOneQuestionIdFromLabel(labelId, question.getQuestionId());
+            }
+
             this.questionRepository.deleteByQuestionId(id);
             return new QuestionDTO(question);
         } else {
@@ -158,6 +217,11 @@ public class QuestionService {
         if (question != null) {
             if(!question.getUserId().equals(userId)) {
                 throw new Exception("You can not access to others question.");
+            }
+
+            List<ObjectId> labelIds = question.getLabels();
+            for(ObjectId labelId : labelIds) {
+                this.removeOneQuestionIdFromLabel(labelId, question.getQuestionId());
             }
 
             this.questionRepository.deleteByReadableId(normalizedName);

@@ -14,6 +14,8 @@ public class LabelDTO {
 
     private String description;
 
+    private List<String> questions;
+
     private String userId;
 
     public LabelDTO() {
@@ -32,6 +34,7 @@ public class LabelDTO {
         this.name = label.getName();
         this.parents = label.getParents().stream().map(ObjectId::toHexString).toList();
         this.description = label.getDescription();
+        this.questions = label.getQuestions().stream().map(ObjectId::toHexString).toList();
         this.userId = label.getUserId().toHexString();
     }
 
@@ -65,6 +68,14 @@ public class LabelDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<String> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<String> questions) {
+        this.questions = questions;
     }
 
     public String getUserId() {

@@ -22,8 +22,13 @@ public class Label {
 
     private Url url;
 
+    private List<ObjectId> questions;
+
     @NotBlank
     private ObjectId userId;
+
+    public Label() {
+    }
 
     public Label(String name, List<ObjectId> parents, String description, Url url, ObjectId userId) {
         this.name = name;
@@ -67,6 +72,14 @@ public class Label {
 
     public void setUrl(Url url) {
         this.url = url;
+    }
+
+    public List<ObjectId> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<ObjectId> questions) {
+        this.questions = questions;
     }
 
     public ObjectId getUserId() {

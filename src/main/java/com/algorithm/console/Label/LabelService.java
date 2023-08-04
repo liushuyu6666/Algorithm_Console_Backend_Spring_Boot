@@ -64,6 +64,7 @@ public class LabelService {
             labelById.setParents(newLabel.getParents());
             labelById.setDescription(newLabel.getDescription());
             labelById.setUrl(newLabel.getUrl());
+            labelById.setQuestions(newLabel.getQuestions());
             labelById.setUserId(newLabel.getUserId());
 
             return new LabelDTO(this.labelRepository.save(labelById));
@@ -93,6 +94,7 @@ public class LabelService {
             labelByOldName.setParents(newLabel.getParents());
             labelByOldName.setDescription(newLabel.getDescription());
             labelByOldName.setUrl(newLabel.getUrl());
+            labelByOldName.setQuestions(newLabel.getQuestions());
             labelByOldName.setUserId(newLabel.getUserId());
 
             return new LabelDTO(this.labelRepository.save(labelByOldName));
