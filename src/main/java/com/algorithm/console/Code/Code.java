@@ -1,25 +1,21 @@
-package com.algorithm.console.Solution;
+package com.algorithm.console.Code;
 
-import com.algorithm.console.Url.Url;
-
-import java.util.List;
-
-public class Solution {
+public class Code {
     private String language;
 
     private String codeUrl;
 
     private String explanationUrl;
 
-    public Solution() {
+    public Code() {
     }
 
-    public Solution(String language, String codeUrl) {
+    public Code(String language, String codeUrl) {
         this.language = language;
         this.codeUrl = codeUrl;
     }
 
-    public Solution(String language, String codeUrl, String explanationUrl) {
+    public Code(String language, String codeUrl, String explanationUrl) {
         this.language = language;
         this.codeUrl = codeUrl;
         this.explanationUrl = explanationUrl;

@@ -30,7 +30,7 @@ public class QuestionService {
                     newQuestion.getDifficulty(),
                     newQuestion.getQuestionUrls(),
                     newQuestion.getReadme(),
-                    newQuestion.getSolutions(),
+                    newQuestion.getCodes(),
                     newQuestion.getDescription(),
                     userId
             );

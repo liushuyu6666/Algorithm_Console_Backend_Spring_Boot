@@ -1,7 +1,6 @@
 package com.algorithm.console.Question;
 
-import com.algorithm.console.Label.Label;
-import com.algorithm.console.Solution.Solution;
+import com.algorithm.console.Code.Code;
 import com.algorithm.console.Url.Url;
 import com.algorithm.console.Utils.StringFieldProcess;
 import jakarta.validation.constraints.NotBlank;
@@ -43,7 +42,7 @@ public class Question {
 
     private List<Url> readme;
 
-    private List<Solution> solutions;
+    private List<Code> codes;
 
     private String description;
 
@@ -63,7 +62,7 @@ public class Question {
         this.userId = userId;
     }
 
-    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Solution> solutions, String description, ObjectId userId) {
+    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Code> codes, String description, ObjectId userId) {
         this.from = from;
         this.section = section;
         this.stringName = stringName;
@@ -74,7 +73,7 @@ public class Question {
         this.difficulty = difficulty;
         this.questionUrls = questionUrls;
         this.readme = readme;
-        this.solutions = solutions;
+        this.codes = codes;
         this.description = description;
         this.userId = userId;
     }
@@ -167,12 +166,12 @@ public class Question {
         this.readme = readme;
     }
 
-    public List<Solution> getSolutions() {
-        return solutions;
+    public List<Code> getCodes() {
+        return codes;
     }
 
-    public void setSolutions(List<Solution> solutions) {
-        this.solutions = solutions;
+    public void setCodes(List<Code> codes) {
+        this.codes = codes;
     }
 
     public String getDescription() {

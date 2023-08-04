@@ -1,6 +1,6 @@
 package com.algorithm.console.Question;
 
-import com.algorithm.console.Solution.Solution;
+import com.algorithm.console.Code.Code;
 import com.algorithm.console.Url.Url;
 import org.bson.types.ObjectId;
 
@@ -29,7 +29,7 @@ public class QuestionDTO {
 
     private List<Url> readme;
 
-    private List<Solution> solutions;
+    private List<Code> codes;
 
     private String description;
 
@@ -38,7 +38,7 @@ public class QuestionDTO {
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, List<String> labels, List<String> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Solution> solutions, String description, String userId) {
+    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, List<String> labels, List<String> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Code> codes, String description, String userId) {
         this.questionId = questionId;
         this.from = from;
         this.section = section;
@@ -50,7 +50,7 @@ public class QuestionDTO {
         this.difficulty = difficulty;
         this.questionUrls = questionUrls;
         this.readme = readme;
-        this.solutions = solutions;
+        this.codes = codes;
         this.description = description;
         this.userId = userId;
     }
@@ -67,7 +67,7 @@ public class QuestionDTO {
         this.difficulty = question.getDifficulty();
         this.questionUrls = question.getQuestionUrls();
         this.readme = question.getReadme();
-        this.solutions = question.getSolutions();
+        this.codes = question.getCodes();
         this.description = question.getDescription();
         this.userId = question.getUserId().toHexString();
     }
@@ -160,12 +160,12 @@ public class QuestionDTO {
         this.readme = readme;
     }
 
-    public List<Solution> getSolutions() {
-        return solutions;
+    public List<Code> getSolutions() {
+        return codes;
     }
 
-    public void setSolutions(List<Solution> solutions) {
-        this.solutions = solutions;
+    public void setSolutions(List<Code> codes) {
+        this.codes = codes;
     }
 
     public String getDescription() {
