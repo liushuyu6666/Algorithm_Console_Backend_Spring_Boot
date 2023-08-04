@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class QuestionService {
@@ -100,12 +102,12 @@ public class QuestionService {
         this.labelRepository.save(label);
     }
 
-    private void updateQuestionIdsInLabels(ObjectId questionId, List<ObjectId> oldLabelIds, List<ObjectId> newLabelIds) {
+    private void updateQuestionIdsInLabels(ObjectId questionId, Set<ObjectId> oldLabelIds, Set<ObjectId> newLabelIds) {
 
-        List<ObjectId> onlyInOlds = new ArrayList<>(oldLabelIds);
+        Set<ObjectId> onlyInOlds = new HashSet<>(oldLabelIds);
         onlyInOlds.removeAll(newLabelIds);
 
-        List<ObjectId> onlyInNews = new ArrayList<>(newLabelIds);
+        Set<ObjectId> onlyInNews = new HashSet<>(newLabelIds);
         onlyInNews.removeAll(oldLabelIds);
 
         for(ObjectId labelId : onlyInOlds) {
@@ -200,7 +202,7 @@ public class QuestionService {
                 throw new Exception("You can not access to others question.");
             }
 
-            List<ObjectId> labelIds = question.getLabels();
+            Set<ObjectId> labelIds = question.getLabels();
             for(ObjectId labelId : labelIds) {
                 this.removeOneQuestionIdFromLabel(labelId, question.getQuestionId());
             }
@@ -222,7 +224,7 @@ public class QuestionService {
                 throw new Exception("You can not access to others question.");
             }
 
-            List<ObjectId> labelIds = question.getLabels();
+            Set<ObjectId> labelIds = question.getLabels();
             for(ObjectId labelId : labelIds) {
                 this.removeOneQuestionIdFromLabel(labelId, question.getQuestionId());
             }

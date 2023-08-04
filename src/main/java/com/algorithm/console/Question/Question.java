@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "Questions")
 public class Question {
@@ -30,9 +31,9 @@ public class Question {
     private String readableId;
 
     @NotBlank
-    private List<ObjectId> labels;
+    private Set<ObjectId> labels;
 
-    private List<ObjectId> parents;
+    private Set<ObjectId> parents;
 
     @NotBlank
     private Integer difficulty;
@@ -52,7 +53,7 @@ public class Question {
     public Question() {
     }
 
-    public Question(String from, String readableId, List<ObjectId> labels, Integer difficulty, List<Url> questionUrls, String description, ObjectId userId) {
+    public Question(String from, String readableId, Set<ObjectId> labels, Integer difficulty, List<Url> questionUrls, String description, ObjectId userId) {
         this.from = from;
         this.readableId = readableId;
         this.labels = labels;
@@ -62,7 +63,7 @@ public class Question {
         this.userId = userId;
     }
 
-    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, ObjectId userId) {
+    public Question(String from, String section, String stringName, Integer numericName, String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, ObjectId userId) {
         this.from = from;
         this.section = section;
         this.stringName = stringName;
@@ -126,19 +127,19 @@ public class Question {
         this.readableId = StringFieldProcess.normalizeField(readableId);
     }
 
-    public List<ObjectId> getLabels() {
+    public Set<ObjectId> getLabels() {
         return labels;
     }
 
-    public void setLabels(List<ObjectId> labels) {
+    public void setLabels(Set<ObjectId> labels) {
         this.labels = labels;
     }
 
-    public List<ObjectId> getParents() {
+    public Set<ObjectId> getParents() {
         return parents;
     }
 
-    public void setParents(List<ObjectId> parents) {
+    public void setParents(Set<ObjectId> parents) {
         this.parents = parents;
     }
 

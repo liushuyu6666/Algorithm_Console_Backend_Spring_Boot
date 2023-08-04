@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.Set;
 
 @Document(collection = "Labels")
 public class Label {
@@ -22,7 +23,7 @@ public class Label {
 
     private Url url;
 
-    private List<ObjectId> questions;
+    private Set<ObjectId> questions;
 
     @NotBlank
     private ObjectId userId;
@@ -30,7 +31,7 @@ public class Label {
     public Label() {
     }
 
-    public Label(String name, List<ObjectId> parents, String description, Url url, List<ObjectId> questions, ObjectId userId) {
+    public Label(String name, List<ObjectId> parents, String description, Url url, Set<ObjectId> questions, ObjectId userId) {
         this.name = name;
         this.parents = parents;
         this.description = description;
@@ -75,11 +76,11 @@ public class Label {
         this.url = url;
     }
 
-    public List<ObjectId> getQuestions() {
+    public Set<ObjectId> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<ObjectId> questions) {
+    public void setQuestions(Set<ObjectId> questions) {
         this.questions = questions;
     }
 

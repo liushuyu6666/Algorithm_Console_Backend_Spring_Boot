@@ -5,6 +5,8 @@ import com.algorithm.console.Url.Url;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class QuestionDTO {
     private String questionId;
@@ -19,9 +21,9 @@ public class QuestionDTO {
 
     private String readableId;
 
-    private List<String> labels;
+    private Set<String> labels;
 
-    private List<String> parents;
+    private Set<String> parents;
 
     private Integer difficulty;
 
@@ -38,7 +40,7 @@ public class QuestionDTO {
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, List<String> labels, List<String> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, String userId) {
+    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, Set<String> labels, Set<String> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, String userId) {
         this.questionId = questionId;
         this.from = from;
         this.section = section;
@@ -62,8 +64,8 @@ public class QuestionDTO {
         this.stringName = question.getStringName();
         this.numericName = question.getNumericName();
         this.readableId = question.getReadableId();
-        this.labels = question.getLabels().stream().map(ObjectId::toHexString).toList();
-        this.parents = question.getParents().stream().map(ObjectId::toHexString).toList();
+        this.labels = question.getLabels().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
+        this.parents = question.getParents().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
         this.difficulty = question.getDifficulty();
         this.questionUrls = question.getQuestionUrls();
         this.readme = question.getReadme();
@@ -120,19 +122,19 @@ public class QuestionDTO {
         this.readableId = readableId;
     }
 
-    public List<String> getLabels() {
+    public Set<String> getLabels() {
         return labels;
     }
 
-    public void setLabels(List<String> labels) {
+    public void setLabels(Set<String> labels) {
         this.labels = labels;
     }
 
-    public List<String> getParents() {
+    public Set<String> getParents() {
         return parents;
     }
 
-    public void setParents(List<String> parents) {
+    public void setParents(Set<String> parents) {
         this.parents = parents;
     }
 
