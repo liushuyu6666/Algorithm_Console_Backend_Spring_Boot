@@ -40,7 +40,7 @@ public class Question {
     @NotBlank
     private List<Url> questionUrls;
 
-    private List<Url> readme;
+    private Url readme;
 
     private List<Code> codes;
 
@@ -62,7 +62,7 @@ public class Question {
         this.userId = userId;
     }
 
-    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Code> codes, String description, ObjectId userId) {
+    public Question(String from, String section, String stringName, Integer numericName, String readableId, List<ObjectId> labels, List<ObjectId> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, ObjectId userId) {
         this.from = from;
         this.section = section;
         this.stringName = stringName;
@@ -158,11 +158,11 @@ public class Question {
         this.questionUrls = questionUrls;
     }
 
-    public List<Url> getReadme() {
+    public Url getReadme() {
         return readme;
     }
 
-    public void setReadme(List<Url> readme) {
+    public void setReadme(Url readme) {
         this.readme = readme;
     }
 

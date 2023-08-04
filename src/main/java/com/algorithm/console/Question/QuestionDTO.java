@@ -27,7 +27,7 @@ public class QuestionDTO {
 
     private List<Url> questionUrls;
 
-    private List<Url> readme;
+    private Url readme;
 
     private List<Code> codes;
 
@@ -38,7 +38,7 @@ public class QuestionDTO {
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, List<String> labels, List<String> parents, Integer difficulty, List<Url> questionUrls, List<Url> readme, List<Code> codes, String description, String userId) {
+    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, List<String> labels, List<String> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, String userId) {
         this.questionId = questionId;
         this.from = from;
         this.section = section;
@@ -152,11 +152,11 @@ public class QuestionDTO {
         this.questionUrls = questionUrls;
     }
 
-    public List<Url> getReadme() {
+    public Url getReadme() {
         return readme;
     }
 
-    public void setReadme(List<Url> readme) {
+    public void setReadme(Url readme) {
         this.readme = readme;
     }
 

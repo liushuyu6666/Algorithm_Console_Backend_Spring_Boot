@@ -91,7 +91,7 @@ public class QuestionService {
             questionFromId.setDifficulty(question.getDifficulty());
             questionFromId.setQuestionUrls(question.getQuestionUrls());
             questionFromId.setReadme(question.getReadme());
-            questionFromId.setSolutions(question.getSolutions());
+            questionFromId.setCodes(question.getCodes());
             questionFromId.setUserId(userId);
 
             return new QuestionDTO(this.questionRepository.save(questionFromId));
@@ -126,7 +126,7 @@ public class QuestionService {
             questionByOldName.setDifficulty(question.getDifficulty());
             questionByOldName.setQuestionUrls(question.getQuestionUrls());
             questionByOldName.setReadme(question.getReadme());
-            questionByOldName.setSolutions(question.getSolutions());
+            questionByOldName.setCodes(question.getCodes());
             questionByOldName.setUserId(userId);
 
             return new QuestionDTO(this.questionRepository.save(questionByOldName));
