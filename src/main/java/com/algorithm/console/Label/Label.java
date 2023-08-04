@@ -30,11 +30,12 @@ public class Label {
     public Label() {
     }
 
-    public Label(String name, List<ObjectId> parents, String description, Url url, ObjectId userId) {
+    public Label(String name, List<ObjectId> parents, String description, Url url, List<ObjectId> questions, ObjectId userId) {
         this.name = name;
         this.parents = parents;
         this.description = description;
         this.url = url;
+        this.questions = questions;
         this.userId = userId;
     }
 

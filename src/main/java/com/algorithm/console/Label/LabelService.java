@@ -18,7 +18,7 @@ public class LabelService {
             throw new Exception("Label name " + normalizedName + " already existed.");
         }
 
-        Label newLabel = new Label(normalizedName, label.getParents(), label.getDescription(), label.getUrl(), userId);
+        Label newLabel = new Label(normalizedName, label.getParents(), label.getDescription(), label.getUrl(), label.getQuestions(), userId);
 
         return new LabelDTO(this.labelRepository.save(newLabel));
     }

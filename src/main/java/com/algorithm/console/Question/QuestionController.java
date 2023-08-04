@@ -30,7 +30,6 @@ public class QuestionController {
         try {
             ObjectId userId = this.authService.authenticateToken(authentication);
 
-            System.out.println(userId);
             String name = question.getReadableId().trim();
             assert !name.isEmpty();
             try {

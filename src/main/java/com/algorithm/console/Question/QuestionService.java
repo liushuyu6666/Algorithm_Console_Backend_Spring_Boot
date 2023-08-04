@@ -25,13 +25,6 @@ public class QuestionService {
         if(existingQuestion != null) {
             throw new Exception("The question id " + normalizedReadableId + " is existed");
         } else {
-            for(ObjectId labelId : newQuestion.getLabels()) {
-                Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
-                if(label == null) continue;
-                label.getQuestions().add(newQuestion.getQuestionId());
-                this.labelRepository.save(label);
-            }
-
             Question question = new Question(
                     newQuestion.getFrom(),
                     newQuestion.getSection(),
@@ -47,7 +40,17 @@ public class QuestionService {
                     newQuestion.getDescription(),
                     userId
             );
-            return new QuestionDTO(this.questionRepository.save(question));
+            Question insertedQuestion = this.questionRepository.save(question);
+            QuestionDTO questionDTO = new QuestionDTO(insertedQuestion);
+
+            for(ObjectId labelId : newQuestion.getLabels()) {
+                Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
+                if(label == null) continue;
+                label.getQuestions().add(insertedQuestion.getQuestionId());
+                this.labelRepository.save(label);
+            }
+
+            return questionDTO;
         }
     }
 
