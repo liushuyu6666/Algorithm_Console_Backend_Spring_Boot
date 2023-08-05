@@ -5,7 +5,10 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class LabelService {
@@ -18,7 +21,14 @@ public class LabelService {
             throw new Exception("Label name " + normalizedName + " already existed.");
         }
 
-        Label newLabel = new Label(normalizedName, label.getParents(), label.getDescription(), label.getUrl(), label.getQuestions(), userId);
+        Set<ObjectId> questions;
+        if(label.getQuestions() == null) {
+            questions = new HashSet<>();
+        } else {
+            questions = label.getQuestions();
+        }
+
+        Label newLabel = new Label(normalizedName, label.getParents(), label.getDescription(), label.getUrl(), questions, userId);
 
         return new LabelDTO(this.labelRepository.save(newLabel));
     }
