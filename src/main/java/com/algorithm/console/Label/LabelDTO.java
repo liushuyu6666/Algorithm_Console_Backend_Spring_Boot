@@ -1,5 +1,6 @@
 package com.algorithm.console.Label;
 
+import com.algorithm.console.Url.Url;
 import jakarta.validation.constraints.Null;
 import org.bson.types.ObjectId;
 
@@ -13,6 +14,8 @@ public class LabelDTO {
     private List<String> parents;
 
     private String description;
+
+    private Url url;
 
     private List<String> questions;
 
@@ -33,6 +36,7 @@ public class LabelDTO {
         this.labelId = label.getLabelId().toHexString();
         this.name = label.getName();
         this.parents = label.getParents().stream().map(ObjectId::toHexString).toList();
+        this.url = label.getUrl();
         this.description = label.getDescription();
         this.questions = label.getQuestions().stream().map(ObjectId::toHexString).toList();
         this.userId = label.getUserId().toHexString();
@@ -60,6 +64,14 @@ public class LabelDTO {
 
     public void setParents(List<String> parents) {
         this.parents = parents;
+    }
+
+    public Url getUrl() {
+        return url;
+    }
+
+    public void setUrl(Url url) {
+        this.url = url;
     }
 
     public String getDescription() {
