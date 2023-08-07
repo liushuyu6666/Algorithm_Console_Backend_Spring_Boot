@@ -70,12 +70,16 @@ public class LabelService {
                 throw new IllegalAccessException("You can not access to others label");
             }
 
+            Set<ObjectId> newQuestions = new HashSet<>();
+            if(!newLabel.getQuestions().isEmpty()) {
+                newQuestions = newLabel.getQuestions();
+            }
             labelById.setName(normalizedName);
             labelById.setParents(newLabel.getParents());
             labelById.setDescription(newLabel.getDescription());
             labelById.setUrl(newLabel.getUrl());
-            labelById.setQuestions(newLabel.getQuestions());
-            labelById.setUserId(newLabel.getUserId());
+            labelById.setQuestions(newQuestions);
+            labelById.setUserId(userId);
 
             return new LabelDTO(this.labelRepository.save(labelById));
         } else {
