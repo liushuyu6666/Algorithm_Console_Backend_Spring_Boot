@@ -71,7 +71,7 @@ public class LabelService {
             }
 
             Set<ObjectId> newQuestions = new HashSet<>();
-            if(!newLabel.getQuestions().isEmpty()) {
+            if(newLabel.getQuestions() != null) {
                 newQuestions = newLabel.getQuestions();
             }
             labelById.setName(normalizedName);
