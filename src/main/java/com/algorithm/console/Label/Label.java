@@ -19,9 +19,9 @@ public class Label {
     @NotBlank
     private List<ObjectId> parents;
     @NotBlank
-    private String description;
+    private LabelType labelType;
 
-    private Url url;
+    private String url;
 
     private Set<ObjectId> questions;
 
@@ -31,10 +31,10 @@ public class Label {
     public Label() {
     }
 
-    public Label(String name, List<ObjectId> parents, String description, Url url, Set<ObjectId> questions, ObjectId userId) {
+    public Label(String name, List<ObjectId> parents, LabelType labelType,String url, Set<ObjectId> questions, ObjectId userId) {
         this.name = name;
         this.parents = parents;
-        this.description = description;
+        this.labelType = labelType;
         this.url = url;
         this.questions = questions;
         this.userId = userId;
@@ -52,6 +52,14 @@ public class Label {
         this.name = StringFieldProcess.normalizeField(name);
     }
 
+    public LabelType getLabelType() {
+        return labelType;
+    }
+
+    public void setLabelType(LabelType labelType) {
+        this.labelType = labelType;
+    }
+
     public List<ObjectId> getParents() {
         return parents;
     }
@@ -60,19 +68,11 @@ public class Label {
         this.parents = parents;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Url getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(Url url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 

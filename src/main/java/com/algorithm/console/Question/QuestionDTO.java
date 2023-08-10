@@ -1,7 +1,7 @@
 package com.algorithm.console.Question;
 
-import com.algorithm.console.Code.Code;
-import com.algorithm.console.Url.Url;
+import com.algorithm.console.Difficulty.Difficulty;
+import com.algorithm.console.Solution.Solution;
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -11,66 +11,46 @@ import java.util.stream.Collectors;
 public class QuestionDTO {
     private String questionId;
 
-    private String from;
-
-    private String section;
-
-    private String stringName;
-
-    private Integer numericName;
-
     private String readableId;
 
     private Set<String> labels;
 
     private Set<String> parents;
 
-    private Integer difficulty;
+    private Difficulty difficulty;
 
-    private List<Url> questionUrls;
+    private String from;
 
-    private Url readme;
+    private String content;
 
-    private List<Code> codes;
-
-    private String description;
+    private List<Solution> solutions;
 
     private String userId;
 
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String questionId, String from, String section, String stringName, Integer numericName, String readableId, Set<String> labels, Set<String> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, String userId) {
+    public QuestionDTO(String questionId, String readableId, Set<String> labels, Set<String> parents, Difficulty difficulty, String from, String content, List<Solution> solutions, String userId) {
         this.questionId = questionId;
-        this.from = from;
-        this.section = section;
-        this.stringName = stringName;
-        this.numericName = numericName;
         this.readableId = readableId;
         this.labels = labels;
         this.parents = parents;
         this.difficulty = difficulty;
-        this.questionUrls = questionUrls;
-        this.readme = readme;
-        this.codes = codes;
-        this.description = description;
+        this.from = from;
+        this.content = content;
+        this.solutions = solutions;
         this.userId = userId;
     }
 
     public QuestionDTO(Question question) {
         this.questionId = question.getQuestionId().toHexString();
-        this.from = question.getFrom();
-        this.section = question.getSection();
-        this.stringName = question.getStringName();
-        this.numericName = question.getNumericName();
         this.readableId = question.getReadableId();
         this.labels = question.getLabels().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
         this.parents = question.getParents().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
         this.difficulty = question.getDifficulty();
-        this.questionUrls = question.getQuestionUrls();
-        this.readme = question.getReadme();
-        this.codes = question.getCodes();
-        this.description = question.getDescription();
+        this.from = question.getFrom();
+        this.content = question.getContent();
+        this.solutions = question.getSolutions();
         this.userId = question.getUserId().toHexString();
     }
 
@@ -80,38 +60,6 @@ public class QuestionDTO {
 
     public void setQuestionId(String questionId) {
         this.questionId = questionId;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getSection() {
-        return section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
-    }
-
-    public String getStringName() {
-        return stringName;
-    }
-
-    public void setStringName(String stringName) {
-        this.stringName = stringName;
-    }
-
-    public Integer getNumericName() {
-        return numericName;
-    }
-
-    public void setNumericName(Integer numericName) {
-        this.numericName = numericName;
     }
 
     public String getReadableId() {
@@ -138,44 +86,36 @@ public class QuestionDTO {
         this.parents = parents;
     }
 
-    public Integer getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Integer difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
-    public List<Url> getQuestionUrls() {
-        return questionUrls;
+    public String getFrom() {
+        return from;
     }
 
-    public void setQuestionUrls(List<Url> questionUrls) {
-        this.questionUrls = questionUrls;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public Url getReadme() {
-        return readme;
+    public String getContent() {
+        return content;
     }
 
-    public void setReadme(Url readme) {
-        this.readme = readme;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public List<Code> getSolutions() {
-        return codes;
+    public List<Solution> getSolutions() {
+        return solutions;
     }
 
-    public void setSolutions(List<Code> codes) {
-        this.codes = codes;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSolutions(List<Solution> solutions) {
+        this.solutions = solutions;
     }
 
     public String getUserId() {

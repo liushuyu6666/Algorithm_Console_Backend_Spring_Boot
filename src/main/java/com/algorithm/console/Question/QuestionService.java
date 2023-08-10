@@ -7,7 +7,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,18 +27,11 @@ public class QuestionService {
             throw new Exception("The question id " + normalizedReadableId + " is existed");
         } else {
             Question question = new Question(
-                    newQuestion.getFrom(),
-                    newQuestion.getSection(),
-                    newQuestion.getStringName(),
-                    newQuestion.getNumericName(),
                     newQuestion.getReadableId(),
                     newQuestion.getLabels(),
                     newQuestion.getParents(),
                     newQuestion.getDifficulty(),
-                    newQuestion.getQuestionUrls(),
-                    newQuestion.getReadme(),
-                    newQuestion.getCodes(),
-                    newQuestion.getDescription(),
+                    newQuestion.getSolutions(),
                     userId
             );
             Question insertedQuestion = this.questionRepository.save(question);
@@ -138,17 +130,13 @@ public class QuestionService {
 
             this.updateQuestionIdsInLabels(id, questionFromId.getLabels(), question.getLabels());
 
-            questionFromId.setFrom(question.getFrom());
-            questionFromId.setSection(question.getSection());
-            questionFromId.setStringName(question.getStringName());
-            questionFromId.setNumericName(question.getNumericName());
             questionFromId.setReadableId(question.getReadableId());
             questionFromId.setLabels(question.getLabels());
             questionFromId.setParents(question.getParents());
             questionFromId.setDifficulty(question.getDifficulty());
-            questionFromId.setQuestionUrls(question.getQuestionUrls());
-            questionFromId.setReadme(question.getReadme());
-            questionFromId.setCodes(question.getCodes());
+            questionFromId.setFrom(question.getFrom());
+            questionFromId.setContent(question.getContent());
+            questionFromId.setSolutions(question.getSolutions());
             questionFromId.setUserId(userId);
 
             return new QuestionDTO(this.questionRepository.save(questionFromId));
@@ -175,17 +163,13 @@ public class QuestionService {
 
             this.updateQuestionIdsInLabels(questionByOldName.getQuestionId(), questionByOldName.getLabels(), question.getLabels());
 
-            questionByOldName.setFrom(question.getFrom());
-            questionByOldName.setSection(question.getSection());
-            questionByOldName.setStringName(question.getStringName());
-            questionByOldName.setNumericName(question.getNumericName());
             questionByOldName.setReadableId(question.getReadableId());
             questionByOldName.setLabels(question.getLabels());
             questionByOldName.setParents(question.getParents());
             questionByOldName.setDifficulty(question.getDifficulty());
-            questionByOldName.setQuestionUrls(question.getQuestionUrls());
-            questionByOldName.setReadme(question.getReadme());
-            questionByOldName.setCodes(question.getCodes());
+            questionByOldName.setFrom(question.getFrom());
+            questionByOldName.setContent(question.getContent());
+            questionByOldName.setSolutions(question.getSolutions());
             questionByOldName.setUserId(userId);
 
             return new QuestionDTO(this.questionRepository.save(questionByOldName));

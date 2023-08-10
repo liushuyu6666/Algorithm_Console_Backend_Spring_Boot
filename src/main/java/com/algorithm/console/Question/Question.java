@@ -1,8 +1,7 @@
 package com.algorithm.console.Question;
 
-import com.algorithm.console.Code.Code;
-import com.algorithm.console.Url.Url;
-import com.algorithm.console.Utils.StringFieldProcess;
+import com.algorithm.console.Difficulty.Difficulty;
+import com.algorithm.console.Solution.Solution;
 import jakarta.validation.constraints.NotBlank;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -18,34 +17,24 @@ public class Question {
     private ObjectId questionId;
 
     @NotBlank
-    private String from;
-
-    private String section;
-
-    private String stringName;
-
-    private Integer numericName;
-
-    @NotBlank
     @Indexed(unique = true)
     private String readableId;
 
     @NotBlank
     private Set<ObjectId> labels;
 
+    @NotBlank
     private Set<ObjectId> parents;
 
     @NotBlank
-    private Integer difficulty;
+    private Difficulty difficulty;
+
+    private String from;
+
+    private String content;
 
     @NotBlank
-    private List<Url> questionUrls;
-
-    private Url readme;
-
-    private List<Code> codes;
-
-    private String description;
+    private List<Solution> solutions;
 
     @NotBlank
     private ObjectId userId;
@@ -53,29 +42,24 @@ public class Question {
     public Question() {
     }
 
-    public Question(String from, String readableId, Set<ObjectId> labels, Integer difficulty, List<Url> questionUrls, String description, ObjectId userId) {
-        this.from = from;
-        this.readableId = readableId;
-        this.labels = labels;
-        this.difficulty = difficulty;
-        this.questionUrls = questionUrls;
-        this.description = description;
-        this.userId = userId;
-    }
-
-    public Question(String from, String section, String stringName, Integer numericName, String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Integer difficulty, List<Url> questionUrls, Url readme, List<Code> codes, String description, ObjectId userId) {
-        this.from = from;
-        this.section = section;
-        this.stringName = stringName;
-        this.numericName = numericName;
+    public Question(String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Difficulty difficulty, List<Solution> solutions, ObjectId userId) {
         this.readableId = readableId;
         this.labels = labels;
         this.parents = parents;
         this.difficulty = difficulty;
-        this.questionUrls = questionUrls;
-        this.readme = readme;
-        this.codes = codes;
-        this.description = description;
+        this.solutions = solutions;
+        this.userId = userId;
+    }
+
+    public Question(ObjectId questionId, String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Difficulty difficulty, String from, String content, List<Solution> solutions, ObjectId userId) {
+        this.questionId = questionId;
+        this.readableId = readableId;
+        this.labels = labels;
+        this.parents = parents;
+        this.difficulty = difficulty;
+        this.from = from;
+        this.content = content;
+        this.solutions = solutions;
         this.userId = userId;
     }
 
@@ -87,44 +71,12 @@ public class Question {
         this.questionId = questionId;
     }
 
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getSection() {
-        return section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
-    }
-
-    public String getStringName() {
-        return stringName;
-    }
-
-    public void setStringName(String stringName) {
-        this.stringName = stringName;
-    }
-
-    public Integer getNumericName() {
-        return numericName;
-    }
-
-    public void setNumericName(Integer numericName) {
-        this.numericName = numericName;
-    }
-
     public String getReadableId() {
-        return StringFieldProcess.normalizeField(readableId);
+        return readableId;
     }
 
     public void setReadableId(String readableId) {
-        this.readableId = StringFieldProcess.normalizeField(readableId);
+        this.readableId = readableId;
     }
 
     public Set<ObjectId> getLabels() {
@@ -143,44 +95,36 @@ public class Question {
         this.parents = parents;
     }
 
-    public Integer getDifficulty() {
+    public Difficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(Integer difficulty) {
+    public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
     }
 
-    public List<Url> getQuestionUrls() {
-        return questionUrls;
+    public String getFrom() {
+        return from;
     }
 
-    public void setQuestionUrls(List<Url> questionUrls) {
-        this.questionUrls = questionUrls;
+    public void setFrom(String from) {
+        this.from = from;
     }
 
-    public Url getReadme() {
-        return readme;
+    public String getContent() {
+        return content;
     }
 
-    public void setReadme(Url readme) {
-        this.readme = readme;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public List<Code> getCodes() {
-        return codes;
+    public List<Solution> getSolutions() {
+        return solutions;
     }
 
-    public void setCodes(List<Code> codes) {
-        this.codes = codes;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setSolutions(List<Solution> solutions) {
+        this.solutions = solutions;
     }
 
     public ObjectId getUserId() {

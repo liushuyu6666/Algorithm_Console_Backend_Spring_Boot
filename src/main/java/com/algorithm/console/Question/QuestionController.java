@@ -1,9 +1,6 @@
 package com.algorithm.console.Question;
 
 import com.algorithm.console.Auth.AuthService;
-import com.algorithm.console.Label.Label;
-import com.algorithm.console.Label.LabelDTO;
-import com.algorithm.console.Label.LabelService;
 import com.algorithm.console.Payload.ResponseBody;
 import jakarta.validation.constraints.Null;
 import org.bson.types.ObjectId;

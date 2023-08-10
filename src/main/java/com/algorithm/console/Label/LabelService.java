@@ -5,7 +5,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +27,7 @@ public class LabelService {
             questions = label.getQuestions();
         }
 
-        Label newLabel = new Label(normalizedName, label.getParents(), label.getDescription(), label.getUrl(), questions, userId);
+        Label newLabel = new Label(normalizedName, label.getParents(), label.getLabelType(), label.getUrl(), questions, userId);
 
         return new LabelDTO(this.labelRepository.save(newLabel));
     }
@@ -76,7 +75,7 @@ public class LabelService {
             }
             labelById.setName(normalizedName);
             labelById.setParents(newLabel.getParents());
-            labelById.setDescription(newLabel.getDescription());
+            labelById.setLabelType(newLabel.getLabelType());
             labelById.setUrl(newLabel.getUrl());
             labelById.setQuestions(newQuestions);
             labelById.setUserId(userId);
@@ -106,7 +105,7 @@ public class LabelService {
 
             labelByOldName.setName(newNormalizedName);
             labelByOldName.setParents(newLabel.getParents());
-            labelByOldName.setDescription(newLabel.getDescription());
+            labelByOldName.setLabelType(newLabel.getLabelType());
             labelByOldName.setUrl(newLabel.getUrl());
             labelByOldName.setQuestions(newLabel.getQuestions());
             labelByOldName.setUserId(newLabel.getUserId());
