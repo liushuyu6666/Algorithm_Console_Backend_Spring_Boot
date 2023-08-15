@@ -31,8 +31,6 @@ public class Question {
 
     private String from;
 
-    private String content;
-
     @NotBlank
     private List<Solution> solutions;
 
@@ -51,14 +49,13 @@ public class Question {
         this.userId = userId;
     }
 
-    public Question(ObjectId questionId, String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Difficulty difficulty, String from, String content, List<Solution> solutions, ObjectId userId) {
+    public Question(ObjectId questionId, String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Difficulty difficulty, String from, List<Solution> solutions, ObjectId userId) {
         this.questionId = questionId;
         this.readableId = readableId;
         this.labels = labels;
         this.parents = parents;
         this.difficulty = difficulty;
         this.from = from;
-        this.content = content;
         this.solutions = solutions;
         this.userId = userId;
     }
@@ -109,14 +106,6 @@ public class Question {
 
     public void setFrom(String from) {
         this.from = from;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public List<Solution> getSolutions() {

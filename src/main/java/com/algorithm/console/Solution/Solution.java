@@ -1,7 +1,9 @@
 package com.algorithm.console.Solution;
 
+import com.algorithm.console.Language.ELanguage;
+
 public class Solution {
-    private String language;
+    private ELanguage language;
 
     private String url;
 
@@ -10,17 +12,17 @@ public class Solution {
     public Solution() {
     }
 
-    public Solution(String language, String url, String description) {
+    public Solution(ELanguage language, String url, String description) {
         this.language = language;
         this.url = url;
         this.description = description;
     }
 
-    public String getLanguage() {
+    public ELanguage getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(ELanguage language) {
         this.language = language;
     }
 
