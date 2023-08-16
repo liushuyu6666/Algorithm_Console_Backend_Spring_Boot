@@ -1,6 +1,8 @@
 package com.algorithm.console.Question;
 
 import com.algorithm.console.Difficulty.Difficulty;
+import com.algorithm.console.Label.Label;
+import com.algorithm.console.Label.SimplifiedLabel;
 import com.algorithm.console.Solution.Solution;
 import org.bson.types.ObjectId;
 
@@ -13,7 +15,7 @@ public class QuestionDTO {
 
     private String readableId;
 
-    private Set<String> labels;
+    private List<SimplifiedLabel> labels;
 
     private Set<String> parents;
 
@@ -30,7 +32,7 @@ public class QuestionDTO {
     public QuestionDTO() {
     }
 
-    public QuestionDTO(String questionId, String readableId, Set<String> labels, Set<String> parents, Difficulty difficulty, String from, String content, List<Solution> solutions, String userId) {
+    public QuestionDTO(String questionId, String readableId, List<SimplifiedLabel> labels, Set<String> parents, Difficulty difficulty, String from, String content, List<Solution> solutions, String userId) {
         this.questionId = questionId;
         this.readableId = readableId;
         this.labels = labels;
@@ -42,10 +44,10 @@ public class QuestionDTO {
         this.userId = userId;
     }
 
-    public QuestionDTO(Question question) {
+    public QuestionDTO(Question question, List<SimplifiedLabel> labels) {
         this.questionId = question.getQuestionId().toHexString();
         this.readableId = question.getReadableId();
-        this.labels = question.getLabels().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
+        this.labels = labels;
         this.parents = question.getParents().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
         this.difficulty = question.getDifficulty();
         this.from = question.getFrom();
@@ -69,11 +71,11 @@ public class QuestionDTO {
         this.readableId = readableId;
     }
 
-    public Set<String> getLabels() {
+    public List<SimplifiedLabel> getLabels() {
         return labels;
     }
 
-    public void setLabels(Set<String> labels) {
+    public void setLabels(List<SimplifiedLabel> labels) {
         this.labels = labels;
     }
 

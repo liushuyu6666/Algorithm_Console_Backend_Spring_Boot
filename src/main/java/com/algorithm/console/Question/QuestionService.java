@@ -2,11 +2,14 @@ package com.algorithm.console.Question;
 
 import com.algorithm.console.Label.Label;
 import com.algorithm.console.Label.LabelRepository;
+import com.algorithm.console.Label.LabelService;
+import com.algorithm.console.Label.SimplifiedLabel;
 import com.algorithm.console.Utils.StringFieldProcess;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +22,9 @@ public class QuestionService {
     @Autowired
     LabelRepository labelRepository;
 
+    @Autowired
+    LabelService labelService;
+
     public QuestionDTO createQuestion(Question newQuestion, ObjectId userId) throws Exception {
         String normalizedReadableId = StringFieldProcess.normalizeField(newQuestion.getReadableId());
 
@@ -27,15 +33,18 @@ public class QuestionService {
             throw new Exception("The question id " + normalizedReadableId + " is existed");
         } else {
             Question question = new Question(
-                    newQuestion.getReadableId(),
+                    normalizedReadableId,
                     newQuestion.getLabels(),
                     newQuestion.getParents(),
                     newQuestion.getDifficulty(),
                     newQuestion.getSolutions(),
                     userId
             );
+
+            List<SimplifiedLabel> labels = this.labelService.getLabels(question.getLabels());
+
             Question insertedQuestion = this.questionRepository.save(question);
-            QuestionDTO questionDTO = new QuestionDTO(insertedQuestion);
+            QuestionDTO questionDTO = new QuestionDTO(insertedQuestion, labels);
 
             for(ObjectId labelId : newQuestion.getLabels()) {
                 Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
@@ -53,27 +62,31 @@ public class QuestionService {
 
         if(question == null) {
             throw new Exception("No such question");
-        } else {
-            return new QuestionDTO(question);
         }
+
+        List<SimplifiedLabel> labels = this.labelService.getLabels(question.getLabels());
+
+        return new QuestionDTO(question, labels);
     }
 
-    public QuestionDTO retrieveQuestionByName(String readableId) throws Exception {
-        Question question = this.questionRepository.findByReadableId(readableId).orElse(null);
-
-        if(question == null) {
-            throw new Exception("No such question");
-        } else {
-            return new QuestionDTO(question);
-        }
-    }
-
-    public List<QuestionDTO> listQuestionsByUserId(ObjectId userId) {
-        return this.questionRepository.findByUserId(userId).stream().map(QuestionDTO::new).toList();
-    }
+//    public QuestionDTO retrieveQuestionByName(String readableId) throws Exception {
+//        Question question = this.questionRepository.findByReadableId(readableId).orElse(null);
+//
+//        if(question == null) {
+//            throw new Exception("No such question");
+//        } else {
+//            return new QuestionDTO(question);
+//        }
+//    }
 
     public List<QuestionDTO> listAllQuestions() {
-        return this.questionRepository.findAll().stream().map(QuestionDTO::new).toList();
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        for(Question question : this.questionRepository.findAll()) {
+            List<SimplifiedLabel> labelList = this.labelService.getLabels(question.getLabels());
+            QuestionDTO questionDTO = new QuestionDTO(question, labelList);
+            questionDTOList.add(questionDTO);
+        }
+        return questionDTOList;
     }
 
     private void removeOneQuestionIdFromLabel(ObjectId labelId, ObjectId questionId) {
@@ -137,8 +150,9 @@ public class QuestionService {
             questionFromId.setFrom(question.getFrom());
             questionFromId.setSolutions(question.getSolutions());
             questionFromId.setUserId(userId);
+            List<SimplifiedLabel> labels = this.labelService.getLabels(questionFromId.getLabels());
 
-            return new QuestionDTO(this.questionRepository.save(questionFromId));
+            return new QuestionDTO(this.questionRepository.save(questionFromId), labels);
         } else {
             throw new Exception("Question with " + id + " does not exist.");
         }
@@ -169,8 +183,10 @@ public class QuestionService {
             questionByOldName.setFrom(question.getFrom());
             questionByOldName.setSolutions(question.getSolutions());
             questionByOldName.setUserId(userId);
+            List<SimplifiedLabel> labels = this.labelService.getLabels(questionByOldName.getLabels());
 
-            return new QuestionDTO(this.questionRepository.save(questionByOldName));
+
+            return new QuestionDTO(this.questionRepository.save(questionByOldName), labels);
         } else {
             throw new Exception("Question with " + normalizedOldName + " does not exist.");
         }
@@ -189,8 +205,10 @@ public class QuestionService {
                 this.removeOneQuestionIdFromLabel(labelId, question.getQuestionId());
             }
 
+            List<SimplifiedLabel> labels = this.labelService.getLabels(question.getLabels());
+
             this.questionRepository.deleteByQuestionId(id);
-            return new QuestionDTO(question);
+            return new QuestionDTO(question, labels);
         } else {
             throw new Exception("Cannot find " + id + " under the user.");
         }
@@ -211,8 +229,10 @@ public class QuestionService {
                 this.removeOneQuestionIdFromLabel(labelId, question.getQuestionId());
             }
 
+            List<SimplifiedLabel> labels = this.labelService.getLabels(question.getLabels());
+
             this.questionRepository.deleteByReadableId(normalizedName);
-            return new QuestionDTO(question);
+            return new QuestionDTO(question, labels);
         } else {
             throw new Exception("Cannot find " + normalizedName + " under the user.");
         }

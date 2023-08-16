@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -148,5 +149,15 @@ public class LabelService {
         } else {
             return null;
         }
+    }
+
+    public List<SimplifiedLabel> getLabels(Set<ObjectId> labelIds) {
+        List<SimplifiedLabel> simplifiedLabels = new ArrayList<>();
+        for(ObjectId labelId : labelIds) {
+            Label label = this.labelRepository.findByLabelId(labelId).orElse(null);
+            if(label == null) continue;
+            simplifiedLabels.add(new SimplifiedLabel(label));
+        }
+        return simplifiedLabels;
     }
 }
