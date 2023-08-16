@@ -1,6 +1,5 @@
 package com.algorithm.console.Label;
 
-import com.algorithm.console.Url.Url;
 import com.algorithm.console.Utils.StringFieldProcess;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Id;
@@ -17,7 +16,7 @@ public class Label {
     @NotBlank
     private String name;
     @NotBlank
-    private List<ObjectId> parents;
+    private Set<ObjectId> parents;
     @NotBlank
     private LabelType labelType;
 
@@ -31,7 +30,7 @@ public class Label {
     public Label() {
     }
 
-    public Label(String name, List<ObjectId> parents, LabelType labelType,String url, Set<ObjectId> questions, ObjectId userId) {
+    public Label(String name, Set<ObjectId> parents, LabelType labelType,String url, Set<ObjectId> questions, ObjectId userId) {
         this.name = name;
         this.parents = parents;
         this.labelType = labelType;
@@ -60,11 +59,11 @@ public class Label {
         this.labelType = labelType;
     }
 
-    public List<ObjectId> getParents() {
+    public Set<ObjectId> getParents() {
         return parents;
     }
 
-    public void setParents(List<ObjectId> parents) {
+    public void setParents(Set<ObjectId> parents) {
         this.parents = parents;
     }
 

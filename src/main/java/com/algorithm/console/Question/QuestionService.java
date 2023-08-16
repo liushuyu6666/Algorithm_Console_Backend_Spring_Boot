@@ -135,7 +135,6 @@ public class QuestionService {
             questionFromId.setParents(question.getParents());
             questionFromId.setDifficulty(question.getDifficulty());
             questionFromId.setFrom(question.getFrom());
-            questionFromId.setContent(question.getContent());
             questionFromId.setSolutions(question.getSolutions());
             questionFromId.setUserId(userId);
 
@@ -168,7 +167,6 @@ public class QuestionService {
             questionByOldName.setParents(question.getParents());
             questionByOldName.setDifficulty(question.getDifficulty());
             questionByOldName.setFrom(question.getFrom());
-            questionByOldName.setContent(question.getContent());
             questionByOldName.setSolutions(question.getSolutions());
             questionByOldName.setUserId(userId);
 

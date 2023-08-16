@@ -49,7 +49,6 @@ public class QuestionDTO {
         this.parents = question.getParents().stream().map(ObjectId::toHexString).collect(Collectors.toSet());
         this.difficulty = question.getDifficulty();
         this.from = question.getFrom();
-        this.content = question.getContent();
         this.solutions = question.getSolutions();
         this.userId = question.getUserId().toHexString();
     }
