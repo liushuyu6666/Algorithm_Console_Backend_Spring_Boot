@@ -7,16 +7,7 @@ enum LabelType {
 
     CAVEAT,
 
-    JAVA,
+    TYPE,
 
-    PYTHON,
-
-    CPP,
-
-    JAVASCRIPT,
-
-    TYPESCRIPT,
-
-    CSHARP
-
+    LANGUAGE,
 }
