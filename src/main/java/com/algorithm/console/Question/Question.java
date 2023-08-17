@@ -40,11 +40,12 @@ public class Question {
     public Question() {
     }
 
-    public Question(String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Difficulty difficulty, List<Solution> solutions, ObjectId userId) {
+    public Question(String readableId, Set<ObjectId> labels, Set<ObjectId> parents, Difficulty difficulty, String from, List<Solution> solutions, ObjectId userId) {
         this.readableId = readableId;
         this.labels = labels;
         this.parents = parents;
         this.difficulty = difficulty;
+        this.from = from;
         this.solutions = solutions;
         this.userId = userId;
     }

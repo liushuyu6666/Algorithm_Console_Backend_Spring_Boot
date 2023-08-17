@@ -37,6 +37,7 @@ public class QuestionService {
                     newQuestion.getLabels(),
                     newQuestion.getParents(),
                     newQuestion.getDifficulty(),
+                    newQuestion.getFrom(),
                     newQuestion.getSolutions(),
                     userId
             );
