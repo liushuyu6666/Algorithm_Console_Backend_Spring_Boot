@@ -1,6 +1,8 @@
 # Getting Started
 We will first consider to deploy it on local.
 
+## Local Deployment
+Check [how to deploy a Spring Boot project](https://github.com/liushuyu6666/Jays_Deployment/blob/master/Deployment/Spring_Boot.md)
 
 # Java Syntax
 ## Collectors
